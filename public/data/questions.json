@@ -1,0 +1,358 @@
+{
+  "ASD": [
+    {
+      "id": "asd_1",
+      "text": "Does your child have difficulty making eye contact during conversations?",
+      "category": "social"
+    },
+    {
+      "id": "asd_2",
+      "text": "Does your child struggle to understand other people's feelings or emotions?",
+      "category": "social"
+    },
+    {
+      "id": "asd_3",
+      "text": "Does your child prefer to play alone rather than with other children?",
+      "category": "social"
+    },
+    {
+      "id": "asd_4",
+      "text": "Does your child have difficulty starting or maintaining conversations?",
+      "category": "communication"
+    },
+    {
+      "id": "asd_5",
+      "text": "Does your child repeat words or phrases over and over (echolalia)?",
+      "category": "communication"
+    },
+    {
+      "id": "asd_6",
+      "text": "Does your child take things literally and have trouble understanding sarcasm or jokes?",
+      "category": "communication"
+    },
+    {
+      "id": "asd_7",
+      "text": "Does your child have very specific routines and get upset when they change?",
+      "category": "behavior"
+    },
+    {
+      "id": "asd_8",
+      "text": "Does your child have intense interests in specific topics or objects?",
+      "category": "behavior"
+    },
+    {
+      "id": "asd_9",
+      "text": "Does your child engage in repetitive movements (hand flapping, rocking, spinning)?",
+      "category": "behavior"
+    },
+    {
+      "id": "asd_10",
+      "text": "Is your child overly sensitive to sounds, lights, textures, or smells?",
+      "category": "sensory"
+    },
+    {
+      "id": "asd_11",
+      "text": "Does your child have unusual reactions to the way things look, smell, taste, feel, or sound?",
+      "category": "sensory"
+    },
+    {
+      "id": "asd_12",
+      "text": "Does your child line up toys or objects in a specific way?",
+      "category": "behavior"
+    },
+    {
+      "id": "asd_13",
+      "text": "Does your child have difficulty adapting to new situations or environments?",
+      "category": "behavior"
+    },
+    {
+      "id": "asd_14",
+      "text": "Does your child avoid physical contact or hugs?",
+      "category": "social"
+    },
+    {
+      "id": "asd_15",
+      "text": "Does your child have difficulty understanding non-verbal cues like facial expressions or body language?",
+      "category": "social"
+    },
+    {
+      "id": "asd_16",
+      "text": "Does your child have trouble sharing interests or achievements with others?",
+      "category": "social"
+    },
+    {
+      "id": "asd_17",
+      "text": "Does your child use unusual hand or finger movements near their face?",
+      "category": "behavior"
+    },
+    {
+      "id": "asd_18",
+      "text": "Does your child have delayed speech or language development?",
+      "category": "communication"
+    },
+    {
+      "id": "asd_19",
+      "text": "Does your child have difficulty playing pretend or imaginative games?",
+      "category": "social"
+    },
+    {
+      "id": "asd_20",
+      "text": "Does your child become extremely distressed by minor changes in routine?",
+      "category": "behavior"
+    }
+  ],
+  "ADHD": [
+    {
+      "id": "adhd_1",
+      "text": "Does your child have difficulty paying attention to details or make careless mistakes?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_2",
+      "text": "Does your child have trouble sustaining attention in tasks or play activities?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_3",
+      "text": "Does your child seem not to listen when spoken to directly?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_4",
+      "text": "Does your child fail to follow through on instructions and fail to finish tasks?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_5",
+      "text": "Does your child have difficulty organizing tasks and activities?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_6",
+      "text": "Does your child avoid or dislike tasks requiring sustained mental effort?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_7",
+      "text": "Does your child lose things necessary for tasks and activities?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_8",
+      "text": "Is your child easily distracted by external stimuli?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_9",
+      "text": "Is your child forgetful in daily activities?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_10",
+      "text": "Does your child fidget with hands or feet or squirm in seat?",
+      "category": "hyperactivity"
+    },
+    {
+      "id": "adhd_11",
+      "text": "Does your child leave seat in situations when remaining seated is expected?",
+      "category": "hyperactivity"
+    },
+    {
+      "id": "adhd_12",
+      "text": "Does your child run or climb excessively in inappropriate situations?",
+      "category": "hyperactivity"
+    },
+    {
+      "id": "adhd_13",
+      "text": "Does your child have difficulty playing quietly?",
+      "category": "hyperactivity"
+    },
+    {
+      "id": "adhd_14",
+      "text": "Is your child always 'on the go' or acts as if 'driven by a motor'?",
+      "category": "hyperactivity"
+    },
+    {
+      "id": "adhd_15",
+      "text": "Does your child talk excessively?",
+      "category": "hyperactivity"
+    },
+    {
+      "id": "adhd_16",
+      "text": "Does your child blurt out answers before questions are completed?",
+      "category": "impulsivity"
+    },
+    {
+      "id": "adhd_17",
+      "text": "Does your child have difficulty waiting their turn?",
+      "category": "impulsivity"
+    },
+    {
+      "id": "adhd_18",
+      "text": "Does your child interrupt or intrude on others?",
+      "category": "impulsivity"
+    },
+    {
+      "id": "adhd_19",
+      "text": "Does your child act without thinking about consequences?",
+      "category": "impulsivity"
+    },
+    {
+      "id": "adhd_20",
+      "text": "Does your child have difficulty controlling impulses?",
+      "category": "impulsivity"
+    },
+    {
+      "id": "adhd_21",
+      "text": "Does your child have trouble completing homework or chores?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_22",
+      "text": "Does your child start tasks but quickly lose focus?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_23",
+      "text": "Does your child have difficulty following multi-step instructions?",
+      "category": "inattention"
+    },
+    {
+      "id": "adhd_24",
+      "text": "Does your child seem restless, even when trying to relax?",
+      "category": "hyperactivity"
+    },
+    {
+      "id": "adhd_25",
+      "text": "Does your child have difficulty managing time and meeting deadlines?",
+      "category": "inattention"
+    }
+  ],
+  "Dyslexia": [
+    {
+      "id": "dys_1",
+      "text": "Does your child have difficulty recognizing letters or learning the alphabet?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_2",
+      "text": "Does your child struggle with matching letters to sounds?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_3",
+      "text": "Does your child have trouble reading single words in isolation?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_4",
+      "text": "Does your child read slowly and with great difficulty?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_5",
+      "text": "Does your child avoid reading activities?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_6",
+      "text": "Does your child have difficulty sounding out unfamiliar words?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_7",
+      "text": "Does your child confuse similar-looking letters (b/d, p/q)?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_8",
+      "text": "Does your child have trouble remembering sequences (days of the week, alphabet)?",
+      "category": "memory"
+    },
+    {
+      "id": "dys_9",
+      "text": "Does your child struggle with spelling, even common words?",
+      "category": "writing"
+    },
+    {
+      "id": "dys_10",
+      "text": "Does your child have difficulty writing, including letter formation?",
+      "category": "writing"
+    },
+    {
+      "id": "dys_11",
+      "text": "Does your child reverse or transpose letters when writing?",
+      "category": "writing"
+    },
+    {
+      "id": "dys_12",
+      "text": "Does your child have trouble expressing thoughts in writing?",
+      "category": "writing"
+    },
+    {
+      "id": "dys_13",
+      "text": "Does your child have difficulty rhyming words?",
+      "category": "phonological"
+    },
+    {
+      "id": "dys_14",
+      "text": "Does your child struggle to segment words into individual sounds?",
+      "category": "phonological"
+    },
+    {
+      "id": "dys_15",
+      "text": "Does your child have difficulty blending sounds to make words?",
+      "category": "phonological"
+    },
+    {
+      "id": "dys_16",
+      "text": "Does your child mispronounce long or unfamiliar words?",
+      "category": "phonological"
+    },
+    {
+      "id": "dys_17",
+      "text": "Does your child have trouble learning foreign languages?",
+      "category": "language"
+    },
+    {
+      "id": "dys_18",
+      "text": "Does your child take much longer than peers to complete reading or writing tasks?",
+      "category": "processing"
+    },
+    {
+      "id": "dys_19",
+      "text": "Does your child have difficulty following written instructions?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_20",
+      "text": "Does your child have trouble understanding what they've just read?",
+      "category": "comprehension"
+    },
+    {
+      "id": "dys_21",
+      "text": "Does your child confuse the order of letters in words?",
+      "category": "reading"
+    },
+    {
+      "id": "dys_22",
+      "text": "Does your child have difficulty copying from the board or book?",
+      "category": "writing"
+    },
+    {
+      "id": "dys_23",
+      "text": "Does your child have trouble remembering what they've read?",
+      "category": "comprehension"
+    },
+    {
+      "id": "dys_24",
+      "text": "Does your child have difficulty learning multiplication tables or math facts?",
+      "category": "memory"
+    },
+    {
+      "id": "dys_25",
+      "text": "Does your child show frustration or anxiety about reading activities?",
+      "category": "emotional"
+    }
+  ]
+}

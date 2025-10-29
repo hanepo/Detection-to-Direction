@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screening Tests - Detection to Direction</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- NEW Design System -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="/" class="navbar-brand">
+        <span id="logo-icon"></span>
+        Detection to Direction
+      </a>
+      <button class="navbar-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+        <span id="menu-icon"></span>
+      </button>
+      <ul class="navbar-nav" id="navbar-menu">
+        <li><a href="/" class="navbar-link">Home</a></li>
+        <li><a href="/screening.html" class="navbar-link active">Screening</a></li>
+        <li><a href="/add_child.html" class="navbar-link">Children</a></li>
+        <li><a href="/therapists.html" class="navbar-link">Therapists</a></li>
+        <li><a href="/help.html" class="navbar-link">Help</a></li>
+        <li><a href="/login.html" class="navbar-link" id="account-link">Account</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-8);">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Screening</li>
+        </ol>
+      </nav>
+
+      <!-- Page Header -->
+      <div style="margin-bottom: var(--space-6);">
+        <h1 style="margin-bottom: var(--space-2);">Screening Tests</h1>
+        <p class="text-muted" style="font-size: var(--font-size-md);">
+          Choose a child and complete questionnaires to screen for ASD, ADHD, or Dyslexia.
+        </p>
+      </div>
+
+      <!-- Disclaimer Alert -->
+      <div class="alert alert-warning" style="margin-bottom: var(--space-6);">
+        <span id="alert-icon"></span>
+        <div>
+          <strong>Important Disclaimer:</strong> This screening tool provides preliminary information only. It does not replace professional medical evaluation or diagnosis. Always consult with qualified healthcare professionals.
+        </div>
+      </div>
+
+      <!-- Main Screening Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Start Screening</h2>
+          <p class="card-description">Select a child and screening type to begin</p>
+        </div>
+
+        <div class="card-body">
+          <!-- Child Selection -->
+          <div class="form-group">
+            <label for="childSelect" class="form-label form-label-required">
+              <span id="child-icon"></span>
+              Choose Child
+            </label>
+            <select id="childSelect" class="form-select" required>
+              <option value="">-- Select a child --</option>
+            </select>
+            <span class="form-helper">Select the child you want to screen</span>
+          </div>
+
+          <!-- Location Input -->
+          <div class="form-group">
+            <label for="stateInput" class="form-label">
+              <span id="location-icon"></span>
+              City/State (Optional)
+            </label>
+            <input
+              type="text"
+              id="stateInput"
+              class="form-input"
+              placeholder="e.g., Kuala Lumpur, Wilayah Persekutuan"
+            >
+            <span class="form-helper">Enter your location to get nearby therapist recommendations</span>
+          </div>
+
+          <!-- Disorder Selection Buttons -->
+          <div class="form-group">
+            <label class="form-label">Select Screening Type</label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-3); margin-top: var(--space-3);">
+
+              <!-- ASD Card -->
+              <div class="card" style="cursor: pointer; transition: all 0.2s; border: 2px solid var(--color-border);" id="asdCard">
+                <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                  <div style="width: 48px; height: 48px; background: var(--color-primary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-primary);">
+                    <span id="brain-icon"></span>
+                  </div>
+                  <div>
+                    <h4 style="margin: 0;">ASD</h4>
+                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">20 questions</p>
+                  </div>
+                </div>
+                <p style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">
+                  Autism Spectrum Disorder screening
+                </p>
+                <button id="startAsd" class="btn btn-primary btn-full">
+                  Start ASD Screening
+                </button>
+              </div>
+
+              <!-- ADHD Card -->
+              <div class="card" style="cursor: pointer; transition: all 0.2s; border: 2px solid var(--color-border);" id="adhdCard">
+                <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                  <div style="width: 48px; height: 48px; background: var(--color-secondary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-secondary);">
+                    <span id="activity-icon"></span>
+                  </div>
+                  <div>
+                    <h4 style="margin: 0;">ADHD</h4>
+                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">25 questions</p>
+                  </div>
+                </div>
+                <p style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">
+                  Attention-Deficit/Hyperactivity Disorder
+                </p>
+                <button id="startAdhd" class="btn btn-secondary btn-full">
+                  Start ADHD Screening
+                </button>
+              </div>
+
+              <!-- Dyslexia Card -->
+              <div class="card" style="cursor: pointer; transition: all 0.2s; border: 2px solid var(--color-border);" id="dysCard">
+                <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                  <div style="width: 48px; height: 48px; background: var(--color-accent-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-accent);">
+                    <span id="book-icon"></span>
+                  </div>
+                  <div>
+                    <h4 style="margin: 0;">Dyslexia</h4>
+                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">25 questions</p>
+                  </div>
+                </div>
+                <p style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">
+                  Reading and learning differences
+                </p>
+                <button id="startDys" class="btn btn-full" style="background: var(--color-accent); color: white; border: none;">
+                  Start Dyslexia Screening
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Progress Area (Hidden initially) -->
+          <div id="progressArea" style="display: none; margin-top: var(--space-6);">
+            <div class="progress-label">
+              <span>Progress</span>
+              <span id="progressText">0%</span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Question Area -->
+          <div id="questionArea" style="margin-top: var(--space-6);"></div>
+
+          <!-- Result Area -->
+          <div id="resultArea"></div>
+        </div>
+
+        <div class="card-footer">
+          <a href="/" class="btn btn-ghost">
+            <span id="back-icon"></span>
+            Back to Home
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/icons.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/screening.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    // Initialize icons
+    document.getElementById('logo-icon').innerHTML = getIcon('brain');
+    document.getElementById('menu-icon').innerHTML = getIcon('menu');
+    document.getElementById('alert-icon').innerHTML = getIcon('alertCircle');
+    document.getElementById('child-icon').innerHTML = getIcon('baby');
+    document.getElementById('location-icon').innerHTML = getIcon('mapPin');
+    document.getElementById('brain-icon').innerHTML = getIcon('brain');
+    document.getElementById('activity-icon').innerHTML = getIcon('users');
+    document.getElementById('book-icon').innerHTML = getIcon('fileText');
+    document.getElementById('back-icon').innerHTML = getIcon('chevronLeft');
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-toggle')?.addEventListener('click', function() {
+      const menu = document.getElementById('navbar-menu');
+      const isOpen = menu.classList.toggle('open');
+      this.setAttribute('aria-expanded', isOpen);
+      this.querySelector('span').innerHTML = isOpen ? getIcon('x') : getIcon('menu');
+    });
+
+    // Add hover effects to disorder cards
+    ['asdCard', 'adhdCard', 'dysCard'].forEach(id => {
+      const card = document.getElementById(id);
+      if (card) {
+        card.addEventListener('mouseenter', function() {
+          this.style.borderColor = 'var(--color-primary)';
+          this.style.boxShadow = 'var(--shadow-md)';
+        });
+        card.addEventListener('mouseleave', function() {
+          this.style.borderColor = 'var(--color-border)';
+          this.style.boxShadow = 'var(--shadow-sm)';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

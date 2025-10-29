@@ -1,0 +1,415 @@
+/**
+ * Print Styles for Screening Results
+ * Optimized for printing and PDF generation
+ */
+
+@media print {
+  /* Hide unnecessary elements */
+  .navbar,
+  .navbar-toggle,
+  .navbar-nav,
+  .breadcrumb,
+  .btn,
+  button,
+  .toast-container,
+  .modal-backdrop,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Page setup */
+  @page {
+    margin: 2cm;
+    size: A4 portrait;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    color: black;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  /* Container adjustments */
+  .container {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 20pt;
+    margin-bottom: 12pt;
+    page-break-after: avoid;
+  }
+
+  h2 {
+    font-size: 16pt;
+    margin-top: 16pt;
+    margin-bottom: 8pt;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-top: 12pt;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+  }
+
+  h4 {
+    font-size: 12pt;
+    margin-top: 10pt;
+    margin-bottom: 6pt;
+  }
+
+  p {
+    margin-bottom: 8pt;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Links */
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* Don't show URLs for internal links */
+  a[href^="/"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  /* Cards */
+  .card {
+    border: 1pt solid #ddd;
+    padding: 12pt;
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+    box-shadow: none;
+    background: white;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: auto;
+    font-size: 10pt;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tbody {
+    display: table-row-group;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  th,
+  td {
+    border: 1pt solid #ddd;
+    padding: 6pt;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+
+  /* Badges */
+  .badge {
+    border: 1pt solid #333;
+    padding: 2pt 6pt;
+    border-radius: 4pt;
+    font-size: 9pt;
+    display: inline-block;
+  }
+
+  .badge-primary {
+    background-color: #e8e8e8;
+    border-color: #4F46E5;
+  }
+
+  .badge-success {
+    background-color: #e8f5e8;
+    border-color: #16A34A;
+  }
+
+  .badge-warning {
+    background-color: #fff8e8;
+    border-color: #F59E0B;
+  }
+
+  .badge-danger {
+    background-color: #ffe8e8;
+    border-color: #DC2626;
+  }
+
+  /* Alert boxes */
+  .alert {
+    border: 1pt solid #333;
+    padding: 12pt;
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+  }
+
+  .alert-success {
+    background-color: #f0f9f4;
+    border-color: #16A34A;
+  }
+
+  .alert-warning {
+    background-color: #fffbeb;
+    border-color: #F59E0B;
+  }
+
+  .alert-danger {
+    background-color: #fef2f2;
+    border-color: #DC2626;
+  }
+
+  .alert-info {
+    background-color: #eff6ff;
+    border-color: #4F46E5;
+  }
+
+  /* Progress bars */
+  .progress {
+    border: 1pt solid #333;
+    height: 12pt;
+    background: white;
+    position: relative;
+  }
+
+  .progress-bar {
+    background: #333;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* Print-specific header */
+  .print-header {
+    display: block !important;
+    margin-bottom: 20pt;
+    padding-bottom: 12pt;
+    border-bottom: 2pt solid #333;
+  }
+
+  .print-header h1 {
+    margin: 0 0 8pt 0;
+  }
+
+  .print-header .print-date {
+    font-size: 10pt;
+    color: #666;
+  }
+
+  /* Print-specific footer */
+  .print-footer {
+    display: block !important;
+    margin-top: 20pt;
+    padding-top: 12pt;
+    border-top: 1pt solid #ddd;
+    font-size: 9pt;
+    color: #666;
+    text-align: center;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+
+  /* Result-specific styles */
+  .result-summary {
+    border: 2pt solid #333;
+    padding: 16pt;
+    margin-bottom: 16pt;
+    page-break-inside: avoid;
+    background: #f9f9f9;
+  }
+
+  .result-score {
+    font-size: 24pt;
+    font-weight: bold;
+    margin: 8pt 0;
+  }
+
+  .result-interpretation {
+    font-size: 12pt;
+    margin: 8pt 0;
+    line-height: 1.6;
+  }
+
+  /* Category breakdown */
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 12pt 0;
+  }
+
+  .category-item {
+    padding: 8pt;
+    margin-bottom: 8pt;
+    border: 1pt solid #ddd;
+    page-break-inside: avoid;
+  }
+
+  .category-name {
+    font-weight: bold;
+    font-size: 11pt;
+  }
+
+  .category-score {
+    float: right;
+    font-weight: bold;
+  }
+
+  /* Therapist list for printing */
+  .therapist-list {
+    margin: 12pt 0;
+  }
+
+  .therapist-item {
+    padding: 10pt;
+    margin-bottom: 10pt;
+    border: 1pt solid #ddd;
+    page-break-inside: avoid;
+  }
+
+  .therapist-name {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-bottom: 6pt;
+  }
+
+  .therapist-detail {
+    font-size: 10pt;
+    margin-bottom: 3pt;
+  }
+
+  /* Hide icons in print */
+  svg {
+    display: none;
+  }
+
+  /* Show print-only content */
+  .print-only {
+    display: block !important;
+  }
+
+  /* Disclaimer box */
+  .disclaimer-box {
+    border: 2pt solid #000;
+    padding: 12pt;
+    margin: 16pt 0;
+    background: #f9f9f9;
+    page-break-inside: avoid;
+  }
+
+  .disclaimer-box strong {
+    font-size: 12pt;
+  }
+
+  /* QR code or contact info box */
+  .contact-box {
+    border: 1pt solid #ddd;
+    padding: 10pt;
+    margin: 12pt 0;
+    background: #fafafa;
+    page-break-inside: avoid;
+  }
+
+  /* Grid layouts to single column */
+  .grid,
+  [style*="grid"],
+  [style*="display: grid"] {
+    display: block !important;
+  }
+
+  .flex,
+  [style*="display: flex"] {
+    display: block !important;
+  }
+
+  /* Remove shadows and rounded corners for cleaner print */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Ensure images fit on page */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Force background colors for important elements */
+  .highlight-print {
+    background: #fffacd !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Print signature line */
+  .signature-line {
+    margin-top: 30pt;
+    padding-top: 20pt;
+    page-break-inside: avoid;
+  }
+
+  .signature-box {
+    width: 200pt;
+    border-bottom: 1pt solid #000;
+    margin: 20pt 0 5pt 0;
+  }
+
+  .signature-label {
+    font-size: 9pt;
+    color: #666;
+  }
+}
+
+/* Print button styling (shown on screen, hidden in print) */
+@media screen {
+  .print-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .print-only {
+    display: none;
+  }
+}

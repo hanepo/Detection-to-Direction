@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find therapist centers for ASD, ADHD, and Dyslexia near you">
+  <title>Find Therapists - Detection to Direction</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- NEW Design System Styles -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container navbar-container">
+      <a href="/" class="navbar-brand">
+        <span class="logo-icon" id="logo-icon"></span>
+        Detection to Direction
+      </a>
+
+      <button class="navbar-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span id="menu-icon"></span>
+      </button>
+
+      <ul class="navbar-nav" id="navbar-menu">
+        <li><a href="/" class="navbar-link">Home</a></li>
+        <li><a href="/screening.html" class="navbar-link">Screening</a></li>
+        <li><a href="/add_child.html" class="navbar-link">Children</a></li>
+        <li><a href="/therapists.html" class="navbar-link active">Therapists</a></li>
+        <li><a href="/help.html" class="navbar-link">Help</a></li>
+        <li><a href="/login.html" class="navbar-link" id="account-link">Account</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-8);">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Find Therapists</li>
+        </ol>
+      </nav>
+
+      <!-- Page Header -->
+      <div style="margin-bottom: var(--space-6);">
+        <h1 style="margin-bottom: var(--space-2);">Find Therapist Centers</h1>
+        <p class="text-muted" style="font-size: var(--font-size-md);">
+          Search for qualified therapist centers by condition and location.
+        </p>
+      </div>
+
+      <!-- Search Form Card -->
+      <div class="card" style="margin-bottom: var(--space-6);">
+        <div class="card-header">
+          <h2 class="card-title">Search Therapists</h2>
+          <p class="card-description">Enter your search criteria to find nearby therapist centers</p>
+        </div>
+
+        <form id="therapistForm" class="card-body">
+          <!-- Condition Selection -->
+          <div class="form-group">
+            <label for="conditionSelect" class="form-label form-label-required">
+              <span id="condition-icon"></span>
+              Condition
+            </label>
+            <select id="conditionSelect" class="form-select" required>
+              <option value="">-- Select a condition --</option>
+              <option value="ASD">ASD (Autism Spectrum Disorder)</option>
+              <option value="ADHD">ADHD (Attention-Deficit/Hyperactivity Disorder)</option>
+              <option value="Dyslexia">Dyslexia</option>
+            </select>
+            <span class="form-helper">Choose the condition you need therapy services for</span>
+          </div>
+
+          <!-- Location Input -->
+          <div class="form-group">
+            <label for="therapistState" class="form-label">
+              <span id="location-icon"></span>
+              City/State
+            </label>
+            <input
+              type="text"
+              id="therapistState"
+              class="form-input"
+              placeholder="e.g., Kuala Lumpur, Wilayah Persekutuan"
+            >
+            <span class="form-helper">Enter your city or state to find nearby therapist centers</span>
+          </div>
+
+          <!-- Search Button -->
+          <div style="display: flex; gap: var(--space-3); align-items: center;">
+            <button class="btn btn-primary" type="submit">
+              <span id="search-icon"></span>
+              Search Therapists
+            </button>
+            <button class="btn btn-ghost" type="button" id="clearSearch" style="display: none;">
+              Clear
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Results Section -->
+      <div id="therapistResults"></div>
+
+      <!-- Back to Home -->
+      <div style="margin-top: var(--space-6);">
+        <a class="btn btn-ghost" href="/">
+          <span id="back-icon"></span>
+          Back to Home
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/icons.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/therapist-finder.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    // Initialize icons
+    if (typeof getIcon === 'function') {
+      document.getElementById('logo-icon').innerHTML = getIcon('brain');
+      document.getElementById('menu-icon').innerHTML = getIcon('menu');
+      document.getElementById('condition-icon').innerHTML = getIcon('clipboard');
+      document.getElementById('location-icon').innerHTML = getIcon('mapPin');
+      document.getElementById('search-icon').innerHTML = getIcon('search');
+      document.getElementById('back-icon').innerHTML = getIcon('chevronLeft');
+    }
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-toggle')?.addEventListener('click', function() {
+      const menu = document.getElementById('navbar-menu');
+      const isOpen = menu.classList.toggle('open');
+      this.setAttribute('aria-expanded', isOpen);
+      this.querySelector('span').innerHTML = isOpen ? getIcon('x') : getIcon('menu');
+    });
+
+    // Clear search functionality
+    const clearBtn = document.getElementById('clearSearch');
+    const resultsArea = document.getElementById('therapistResults');
+    
+    document.getElementById('therapistForm')?.addEventListener('submit', function() {
+      if (clearBtn) clearBtn.style.display = 'inline-flex';
+    });
+    
+    clearBtn?.addEventListener('click', function() {
+      document.getElementById('conditionSelect').value = '';
+      document.getElementById('therapistState').value = '';
+      if (resultsArea) resultsArea.innerHTML = '';
+      this.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

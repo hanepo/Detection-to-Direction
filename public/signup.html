@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your free Detection to Direction parent account">
+  <title>Sign Up - Detection to Direction</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- NEW Design System Styles -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Main Content -->
+  <main id="main-content" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--color-secondary-light) 0%, var(--color-bg) 100%); padding: var(--space-4);">
+    <div class="container-sm" style="width: 100%; max-width: 480px;">
+
+      <!-- Logo/Brand -->
+      <div style="text-align: center; margin-bottom: var(--space-6);">
+        <div style="display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-secondary); margin-bottom: var(--space-2);">
+          <span id="logo-icon"></span>
+          Detection to Direction
+        </div>
+        <p class="text-muted">Create your free account to get started.</p>
+      </div>
+
+      <!-- Signup Card -->
+      <div class="card" style="box-shadow: var(--shadow-xl);">
+        <div class="card-header">
+          <h1 class="card-title" style="font-size: var(--font-size-xl);">Create Parent Account</h1>
+          <p class="card-description">Join thousands of parents using our screening tool</p>
+        </div>
+
+        <form id="signupForm" class="card-body">
+          <!-- Name Field -->
+          <div class="form-group">
+            <label for="signupName" class="form-label form-label-required">
+              <span id="user-icon"></span>
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="signupName"
+              name="name"
+              class="form-input"
+              placeholder="Enter your full name"
+              required
+              autocomplete="name"
+            >
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="signupEmail" class="form-label form-label-required">
+              <span id="email-icon"></span>
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="signupEmail"
+              name="email"
+              class="form-input"
+              placeholder="your.email@example.com"
+              required
+              autocomplete="email"
+            >
+            <span class="form-helper">We'll never share your email with anyone</span>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="signupPassword" class="form-label form-label-required">
+              <span id="password-icon"></span>
+              Password
+            </label>
+            <input
+              type="password"
+              id="signupPassword"
+              name="password"
+              class="form-input"
+              placeholder="Create a secure password"
+              required
+              autocomplete="new-password"
+              minlength="6"
+            >
+            <span class="form-helper">Must be at least 6 characters long</span>
+          </div>
+
+          <!-- Terms and Privacy -->
+          <div class="form-check" style="margin-bottom: var(--space-4);">
+            <input
+              type="checkbox"
+              id="agreeTerms"
+              class="form-check-input"
+              required
+            >
+            <label for="agreeTerms" class="form-check-label">
+              I agree to the <a href="/help.html" style="color: var(--color-primary); text-decoration: none;">Terms of Service</a> and <a href="/help.html" style="color: var(--color-primary); text-decoration: none;">Privacy Policy</a>
+            </label>
+          </div>
+
+          <!-- Message Area -->
+          <div id="signupMsg" style="display: none; margin-bottom: var(--space-4);"></div>
+
+          <!-- Submit Button -->
+          <button class="btn btn-secondary btn-lg btn-full" type="submit">
+            <span id="signup-icon"></span>
+            Create Account
+          </button>
+
+          <!-- Divider -->
+          <div style="position: relative; text-align: center; margin: var(--space-6) 0;">
+            <div style="position: absolute; top: 50%; left: 0; right: 0; border-top: 1px solid var(--color-border);"></div>
+            <span style="position: relative; background: var(--color-surface); padding: 0 var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-sm);">
+              Already have an account?
+            </span>
+          </div>
+
+          <!-- Login Link -->
+          <a href="/login.html" class="btn btn-ghost btn-lg btn-full">
+            <span id="login-icon"></span>
+            Log In
+          </a>
+        </form>
+
+        <!-- Footer Links -->
+        <div class="card-footer" style="justify-content: center;">
+          <a href="/" class="btn btn-ghost btn-sm">
+            <span id="home-icon"></span>
+            Back to Home
+          </a>
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <div style="text-align: center; margin-top: var(--space-4);">
+        <p class="text-muted" style="font-size: var(--font-size-sm);">
+          <span id="shield-icon" style="display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span>
+          Your data is secure and encrypted
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/icons.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    // Initialize icons
+    if (typeof getIcon === 'function') {
+      document.getElementById('logo-icon').innerHTML = getIcon('brain');
+      document.getElementById('user-icon').innerHTML = getIcon('user');
+      document.getElementById('email-icon').innerHTML = getIcon('mail');
+      document.getElementById('password-icon').innerHTML = getIcon('lock');
+      document.getElementById('signup-icon').innerHTML = getIcon('user');
+      document.getElementById('login-icon').innerHTML = getIcon('logOut');
+      document.getElementById('home-icon').innerHTML = getIcon('home');
+      document.getElementById('shield-icon').innerHTML = getIcon('shield');
+    }
+
+    // Enhanced form handling with toast notifications
+    const signupForm = document.getElementById('signupForm');
+    const signupMsg = document.getElementById('signupMsg');
+    
+    if (signupForm) {
+      signupForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const submitBtn = signupForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        // Check if terms agreed
+        const agreeTerms = document.getElementById('agreeTerms');
+        if (agreeTerms && !agreeTerms.checked) {
+          if (typeof toast !== 'undefined') {
+            toast.show('Please agree to the Terms of Service and Privacy Policy', 'warning');
+          }
+          return;
+        }
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add('btn-loading');
+        signupMsg.style.display = 'none';
+        
+        try {
+          const formData = new FormData(signupForm);
+          const response = await fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: formData.get('name'),
+              email: formData.get('email'),
+              password: formData.get('password')
+            })
+          });
+          
+          const result = await response.json();
+          
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('btn-loading');
+          
+          if (result.ok) {
+            // Show success message
+            if (typeof toast !== 'undefined') {
+              toast.show('Account created successfully! Redirecting...', 'success');
+            }
+            signupMsg.className = 'alert alert-success';
+            signupMsg.style.display = 'block';
+            signupMsg.innerHTML = '<span id="success-icon"></span><div>' + (result.message || 'Account created successfully!') + '</div>';
+            if (typeof getIcon === 'function') {
+              document.getElementById('success-icon').innerHTML = getIcon('check');
+            }
+            setTimeout(() => window.location.href = '/login.html', 1500);
+          } else {
+            // Show error message
+            if (typeof toast !== 'undefined') {
+              toast.show(result.message || 'Signup failed. Please try again.', 'danger');
+            }
+            signupMsg.className = 'alert alert-danger';
+            signupMsg.style.display = 'block';
+            signupMsg.innerHTML = '<span id="error-icon"></span><div>' + (result.message || 'Signup failed. Please try again.') + '</div>';
+            if (typeof getIcon === 'function') {
+              document.getElementById('error-icon').innerHTML = getIcon('alertCircle');
+            }
+          }
+        } catch (error) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('btn-loading');
+          console.error('Signup error:', error);
+          
+          if (typeof toast !== 'undefined') {
+            toast.show('Network error. Please try again.', 'danger');
+          }
+          signupMsg.className = 'alert alert-danger';
+          signupMsg.style.display = 'block';
+          signupMsg.innerHTML = '<span id="error-icon"></span><div>Network error. Please check your connection and try again.</div>';
+          if (typeof getIcon === 'function') {
+            document.getElementById('error-icon').innerHTML = getIcon('alertCircle');
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

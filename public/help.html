@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help & FAQ - Detection to Direction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="/" class="navbar-brand"><span id="logo-icon"></span> Detection to Direction</a>
+      <button class="navbar-toggle" id="mobile-menu-toggle" aria-label="Toggle menu"><span id="menu-icon"></span></button>
+      <ul class="navbar-nav" id="navbar-menu">
+        <li><a href="/" class="navbar-link">Home</a></li>
+        <li><a href="/screening.html" class="navbar-link">Screening</a></li>
+        <li><a href="/add_child.html" class="navbar-link">Children</a></li>
+        <li><a href="/therapists.html" class="navbar-link">Therapists</a></li>
+        <li><a href="/help.html" class="navbar-link active">Help</a></li>
+        <li><a href="/login.html" class="navbar-link" id="account-link">Account</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-8);">
+
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Help</li>
+        </ol>
+      </nav>
+
+      <div style="margin-bottom: var(--space-6);">
+        <h1 style="margin-bottom: var(--space-2);"><span id="help-icon"></span> Help & FAQ</h1>
+        <p class="text-muted" style="font-size: var(--font-size-md);">Find answers to common questions</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6);">
+
+        <div class="card">
+          <h3><span id="q1-icon"></span> What is this screening tool?</h3>
+          <p>This is an informational screening tool designed to help parents identify early signs of ASD, ADHD, and Dyslexia. <strong>It is not a diagnostic tool</strong> and does not replace professional medical evaluation.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="q2-icon"></span> How accurate are the results?</h3>
+          <p>The screening questions are based on established diagnostic criteria, but results should be interpreted as preliminary indicators only. A comprehensive professional evaluation is necessary for diagnosis.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="q3-icon"></span> How long does screening take?</h3>
+          <p>Each screening typically takes 10-15 minutes to complete. You can save your progress and return later if needed.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="q4-icon"></span> Is my data private?</h3>
+          <p>Yes, your data is stored securely and is never shared with third parties without your explicit consent. We follow strict privacy and data protection standards.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="q5-icon"></span> What should I do after screening?</h3>
+          <p>If the screening indicates potential concerns, we recommend consulting with a qualified healthcare professional for comprehensive evaluation. We provide therapist recommendations to help you find appropriate support.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="q6-icon"></span> Can I screen multiple children?</h3>
+          <p>Yes! You can add multiple child profiles and track screenings for each child separately. This helps you monitor their development over time.</p>
+        </div>
+
+      </div>
+
+      <div class="card" style="margin-top: var(--space-8); background: var(--color-primary-light);">
+        <h2>Need More Help?</h2>
+        <p>If you have additional questions or need support, feel free to contact us:</p>
+        <div style="margin-top: var(--space-4);">
+          <p><strong><span id="mail-icon"></span> Email:</strong> support@detectiontodirection.my</p>
+          <p><strong><span id="clock-icon"></span> Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM MYT</p>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-6); text-align: center;">
+        <a href="/" class="btn btn-ghost"><span id="back-icon"></span> Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/icons.js"></script>
+  <script>
+    document.getElementById('logo-icon').innerHTML = getIcon('brain');
+    document.getElementById('menu-icon').innerHTML = getIcon('menu');
+    document.getElementById('help-icon').innerHTML = getIcon('helpCircle');
+    document.getElementById('q1-icon').innerHTML = getIcon('info');
+    document.getElementById('q2-icon').innerHTML = getIcon('check');
+    document.getElementById('q3-icon').innerHTML = getIcon('clock');
+    document.getElementById('q4-icon').innerHTML = getIcon('user');
+    document.getElementById('q5-icon').innerHTML = getIcon('mapPin');
+    document.getElementById('q6-icon').innerHTML = getIcon('users');
+    document.getElementById('mail-icon').innerHTML = getIcon('mail');
+    document.getElementById('clock-icon').innerHTML = getIcon('clock');
+    document.getElementById('back-icon').innerHTML = getIcon('chevronLeft');
+
+    document.getElementById('mobile-menu-toggle')?.addEventListener('click', function() {
+      const menu = document.getElementById('navbar-menu');
+      const isOpen = menu.classList.toggle('open');
+      this.setAttribute('aria-expanded', isOpen);
+      this.querySelector('span').innerHTML = isOpen ? getIcon('x') : getIcon('menu');
+    });
+  </script>
+</body>
+</html>

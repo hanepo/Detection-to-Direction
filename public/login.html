@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Log in to your Detection to Direction parent account">
+  <title>Log In - Detection to Direction</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- NEW Design System Styles -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Main Content -->
+  <main id="main-content" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg) 100%); padding: var(--space-4);">
+    <div class="container-sm" style="width: 100%; max-width: 480px;">
+
+      <!-- Logo/Brand -->
+      <div style="text-align: center; margin-bottom: var(--space-6);">
+        <div style="display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: var(--space-2);">
+          <span id="logo-icon"></span>
+          Detection to Direction
+        </div>
+        <p class="text-muted">Welcome back! Please log in to your account.</p>
+      </div>
+
+      <!-- Login Card -->
+      <div class="card" style="box-shadow: var(--shadow-xl);">
+        <div class="card-header">
+          <h1 class="card-title" style="font-size: var(--font-size-xl);">Parent Login</h1>
+          <p class="card-description">Enter your credentials to access your account</p>
+        </div>
+
+        <form id="loginForm" class="card-body">
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="loginEmail" class="form-label form-label-required">
+              <span id="email-icon"></span>
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="loginEmail"
+              name="email"
+              class="form-input"
+              placeholder="your.email@example.com"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="loginPassword" class="form-label form-label-required">
+              <span id="password-icon"></span>
+              Password
+            </label>
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              class="form-input"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <!-- Message Area -->
+          <div id="loginMsg" style="display: none; margin-bottom: var(--space-4);"></div>
+
+          <!-- Submit Button -->
+          <button class="btn btn-primary btn-lg btn-full" type="submit">
+            <span id="login-icon"></span>
+            Log In
+          </button>
+
+          <!-- Divider -->
+          <div style="position: relative; text-align: center; margin: var(--space-6) 0;">
+            <div style="position: absolute; top: 50%; left: 0; right: 0; border-top: 1px solid var(--color-border);"></div>
+            <span style="position: relative; background: var(--color-surface); padding: 0 var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-sm);">
+              Don't have an account?
+            </span>
+          </div>
+
+          <!-- Sign Up Link -->
+          <a href="/signup.html" class="btn btn-ghost btn-lg btn-full">
+            <span id="signup-icon"></span>
+            Create an account
+          </a>
+        </form>
+
+        <!-- Footer Links -->
+        <div class="card-footer" style="justify-content: center;">
+          <a href="/" class="btn btn-ghost btn-sm">
+            <span id="home-icon"></span>
+            Back to Home
+          </a>
+        </div>
+      </div>
+
+      <!-- Help Text -->
+      <div style="text-align: center; margin-top: var(--space-4);">
+        <p class="text-muted" style="font-size: var(--font-size-sm);">
+          Need help? <a href="/help.html" style="color: var(--color-primary); text-decoration: none; font-weight: var(--font-weight-medium);">Visit our help center</a>
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/icons.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    // Check if user is already logged in
+    (async function() {
+      try {
+        const response = await fetch('/api/me');
+        const result = await response.json();
+        if (result.ok && result.user) {
+          // User is already logged in, redirect to home
+          window.location.href = '/';
+        }
+      } catch (error) {
+        // If check fails, just show the login form
+        console.log('Session check failed, showing login form');
+      }
+    })();
+
+    // Initialize icons
+    if (typeof getIcon === 'function') {
+      document.getElementById('logo-icon').innerHTML = getIcon('brain');
+      document.getElementById('email-icon').innerHTML = getIcon('mail');
+      document.getElementById('password-icon').innerHTML = getIcon('lock');
+      document.getElementById('login-icon').innerHTML = getIcon('logOut');
+      document.getElementById('signup-icon').innerHTML = getIcon('user');
+      document.getElementById('home-icon').innerHTML = getIcon('home');
+    }
+
+    // Enhanced form handling with toast notifications
+    const loginForm = document.getElementById('loginForm');
+    const loginMsg = document.getElementById('loginMsg');
+    
+    if (loginForm) {
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add('btn-loading');
+        loginMsg.style.display = 'none';
+        
+        try {
+          const formData = new FormData(loginForm);
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: formData.get('email'),
+              password: formData.get('password')
+            })
+          });
+          
+          const result = await response.json();
+          
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('btn-loading');
+          
+          if (result.ok) {
+            // Show success message
+            if (typeof toast !== 'undefined') {
+              toast.show('Login successful! Redirecting...', 'success');
+            }
+            loginMsg.className = 'alert alert-success';
+            loginMsg.style.display = 'block';
+            loginMsg.innerHTML = '<span id="success-icon"></span><div>' + (result.message || 'Login successful!') + '</div>';
+            if (typeof getIcon === 'function') {
+              document.getElementById('success-icon').innerHTML = getIcon('check');
+            }
+            setTimeout(() => window.location.href = '/', 1000);
+          } else {
+            // Show error message
+            if (typeof toast !== 'undefined') {
+              toast.show(result.message || 'Login failed. Please try again.', 'danger');
+            }
+            loginMsg.className = 'alert alert-danger';
+            loginMsg.style.display = 'block';
+            loginMsg.innerHTML = '<span id="error-icon"></span><div>' + (result.message || 'Login failed. Please check your credentials.') + '</div>';
+            if (typeof getIcon === 'function') {
+              document.getElementById('error-icon').innerHTML = getIcon('alertCircle');
+            }
+          }
+        } catch (error) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('btn-loading');
+          console.error('Login error:', error);
+          
+          if (typeof toast !== 'undefined') {
+            toast.show('Network error. Please try again.', 'danger');
+          }
+          loginMsg.className = 'alert alert-danger';
+          loginMsg.style.display = 'block';
+          loginMsg.innerHTML = '<span id="error-icon"></span><div>Network error. Please check your connection and try again.</div>';
+          if (typeof getIcon === 'function') {
+            document.getElementById('error-icon').innerHTML = getIcon('alertCircle');
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

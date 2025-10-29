@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(move /Y help_new.html help.html:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "app": {
+    "name": "Detection to Direction",
+    "tagline": "Early screening for developmental conditions"
+  },
+  "nav": {
+    "home": "Home",
+    "screening": "Screening",
+    "children": "Children",
+    "therapists": "Therapists",
+    "results": "Results",
+    "help": "Help",
+    "account": "Account",
+    "logout": "Log Out"
+  },
+  "hero": {
+    "title": "Early Detection, Clear Direction",
+    "subtitle": "Simple screening for early signs of ASD, ADHD, and Dyslexia — and therapist suggestions nearby.",
+    "cta_primary": "Start Screening",
+    "cta_secondary": "Learn More"
+  },
+  "trust": {
+    "disclaimer": "Important: This is an informational screening tool, not a clinical diagnosis. Always consult qualified healthcare professionals."
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1": {
+      "title": "Create Account",
+      "description": "Sign up and add your child's profile with basic information."
+    },
+    "step2": {
+      "title": "Complete Screening",
+      "description": "Answer simple questionnaires for ASD, ADHD, or Dyslexia."
+    },
+    "step3": {
+      "title": "Get Results",
+      "description": "View clear results and nearby therapist recommendations."
+    }
+  },
+  "features": {
+    "title": "Why Parents Trust Us",
+    "feature1": {
+      "title": "Evidence-Based Questions",
+      "description": "Screening questions based on established diagnostic criteria."
+    },
+    "feature2": {
+      "title": "Simple & Clear",
+      "description": "Easy to understand language, no medical jargon."
+    },
+    "feature3": {
+      "title": "Local Therapists",
+      "description": "Find qualified therapist centers in your area."
+    },
+    "feature4": {
+      "title": "Privacy First",
+      "description": "Your data is secure and never shared without consent."
+    }
+  },
+  "cta": {
+    "title": "Ready to Get Started?",
+    "description": "Create your free account and complete your first screening in minutes.",
+    "signup": "Create Account",
+    "login": "Log In"
+  },
+  "auth": {
+    "login": {
+      "title": "Log In to Your Account",
+      "email": "Email Address",
+      "password": "Password",
+      "submit": "Log In",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Create one now"
+    },
+    "signup": {
+      "title": "Create Your Account",
+      "name": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Sign Up",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "consent": "I agree to the Terms of Service and Privacy Policy"
+    },
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "passwordMismatch": "Passwords do not match",
+      "weakPassword": "Password must be at least 8 characters",
+      "loginFailed": "Invalid email or password"
+    }
+  },
+  "children": {
+    "title": "Manage Children",
+    "addChild": "Add Child",
+    "editChild": "Edit Child",
+    "deleteChild": "Delete Child",
+    "noChildren": "You haven't added any children yet.",
+    "addFirstChild": "Add your first child to get started with screening.",
+    "form": {
+      "name": "Child's Name",
+      "dateOfBirth": "Date of Birth",
+      "age": "Age",
+      "notes": "Notes (optional)",
+      "notesHelper": "Any behavioral observations or concerns",
+      "submit": "Save Child",
+      "cancel": "Cancel"
+    },
+    "list": {
+      "lastScreening": "Last screening",
+      "noScreenings": "No screenings yet",
+      "viewProfile": "View Profile",
+      "startScreening": "Start Screening"
+    }
+  },
+  "screening": {
+    "title": "Screening Questionnaire",
+    "selectChild": "Select Child",
+    "selectDisorder": "Select Screening Type",
+    "location": "City/State (for therapist recommendations)",
+    "locationPlaceholder": "e.g., Kuala Lumpur, Wilayah Persekutuan",
+    "disorders": {
+      "ASD": "Autism Spectrum Disorder (ASD)",
+      "ADHD": "Attention-Deficit/Hyperactivity Disorder (ADHD)",
+      "Dyslexia": "Dyslexia"
+    },
+    "start": "Start Screening",
+    "continue": "Continue",
+    "saveProgress": "Save Progress",
+    "submitAnswers": "Submit Answers",
+    "progress": "Question {{current}} of {{total}}",
+    "likertScale": {
+      "never": "Never",
+      "rarely": "Rarely",
+      "sometimes": "Sometimes",
+      "often": "Often",
+      "veryOften": "Very Often"
+    },
+    "validation": {
+      "selectChild": "Please select a child",
+      "selectDisorder": "Please select a screening type",
+      "answerAll": "Please answer all questions before submitting"
+    },
+    "disclaimer": "This screening tool provides preliminary information only. It does not replace professional medical evaluation or diagnosis."
+  },
+  "results": {
+    "title": "Screening Results",
+    "for": "for",
+    "date": "Date",
+    "score": "Score",
+    "interpretation": "Interpretation",
+    "recommendation": "Recommendation",
+    "categoryBreakdown": "Category Breakdown",
+    "therapistRecommendations": "Recommended Therapist Centers",
+    "noTherapists": "No therapist centers found for your location.",
+    "actions": {
+      "print": "Print Results",
+      "download": "Download PDF",
+      "share": "Share with Doctor",
+      "newScreening": "Start New Screening",
+      "viewHistory": "View History"
+    },
+    "disclaimer": {
+      "title": "Important Disclaimer",
+      "text": "These screening results are for informational purposes only and should not be considered a medical diagnosis. Please consult with qualified healthcare professionals for proper evaluation and diagnosis."
+    }
+  },
+  "therapists": {
+    "title": "Find Therapist Centers",
+    "search": "Search therapists...",
+    "filters": {
+      "disorder": "Specialization",
+      "state": "State",
+      "all": "All"
+    },
+    "sort": {
+      "name": "Name",
+      "city": "City",
+      "distance": "Distance"
+    },
+    "noResults": "No therapist centers found matching your criteria.",
+    "tryDifferent": "Try adjusting your filters or search terms.",
+    "details": {
+      "specializations": "Specializations",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "website": "Website",
+      "hours": "Hours",
+      "services": "Services"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "save": "Save",
+      "unsave": "Unsave",
+      "copyAddress": "Copy Address",
+      "whatsapp": "WhatsApp",
+      "call": "Call",
+      "website": "Visit Website"
+    },
+    "saved": "Saved Therapists"
+  },
+  "help": {
+    "title": "Help & FAQ",
+    "faq": {
+      "q1": {
+        "question": "What is this screening tool?",
+        "answer": "This is an informational screening tool designed to help parents identify early signs of ASD, ADHD, and Dyslexia. It is not a diagnostic tool and does not replace professional medical evaluation."
+      },
+      "q2": {
+        "question": "How accurate are the results?",
+        "answer": "The screening questions are based on established diagnostic criteria, but results should be interpreted as preliminary indicators only. A comprehensive professional evaluation is necessary for diagnosis."
+      },
+      "q3": {
+        "question": "How long does screening take?",
+        "answer": "Each screening typically takes 10-15 minutes to complete. You can save your progress and return later if needed."
+      },
+      "q4": {
+        "question": "Is my data private?",
+        "answer": "Yes, your data is stored securely and is never shared with third parties without your explicit consent. We follow strict privacy and data protection standards."
+      },
+      "q5": {
+        "question": "What should I do after screening?",
+        "answer": "If the screening indicates potential concerns, we recommend consulting with a qualified healthcare professional for comprehensive evaluation. We provide therapist recommendations to help you find appropriate support."
+      }
+    },
+    "glossary": {
+      "title": "Terms & Definitions",
+      "ASD": "Autism Spectrum Disorder - A developmental condition affecting social communication and behavior, characterized by repetitive patterns and sensory sensitivities.",
+      "ADHD": "Attention-Deficit/Hyperactivity Disorder - A neurodevelopmental condition characterized by persistent patterns of inattention, hyperactivity, and impulsivity.",
+      "Dyslexia": "A learning difference affecting reading, writing, and spelling skills, despite normal intelligence and adequate instruction."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Have questions or need support? We're here to help.",
+      "email": "support@detectiontodirection.my",
+      "hours": "Monday - Friday, 9:00 AM - 5:00 PM MYT"
+    }
+  },
+  "account": {
+    "title": "Account Settings",
+    "profile": {
+      "title": "Profile Information",
+      "name": "Name",
+      "email": "Email",
+      "save": "Save Changes"
+    },
+    "password": {
+      "title": "Change Password",
+      "current": "Current Password",
+      "new": "New Password",
+      "confirm": "Confirm New Password",
+      "update": "Update Password"
+    },
+    "settings": {
+      "title": "Preferences",
+      "language": "Language",
+      "notifications": "Email Notifications"
+    },
+    "data": {
+      "title": "Your Data",
+      "export": "Export Data",
+      "exportDescription": "Download all your data in JSON format",
+      "delete": "Delete Account",
+      "deleteWarning": "This action cannot be undone. All your data will be permanently deleted."
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "footer": {
+    "copyright": "© 2025 Detection to Direction. Designed for clarity and care.",
+    "links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "disclaimer": "Medical Disclaimer",
+      "contact": "Contact Us"
+    }
+  }
+}

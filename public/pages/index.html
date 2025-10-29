@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Early screening for ASD, ADHD, and Dyslexia with therapist recommendations">
+  <title>Detection to Direction - Early Screening Tool</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container navbar-container">
+      <a href="/" class="navbar-brand">
+        <span class="logo-icon" id="logo-icon"></span>
+        Detection to Direction
+      </a>
+
+      <button class="navbar-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span id="menu-icon"></span>
+      </button>
+
+      <ul class="navbar-nav" id="navbar-menu">
+        <li><a href="/" class="navbar-link active">Home</a></li>
+        <li><a href="/screening.html" class="navbar-link">Screening</a></li>
+        <li><a href="/children.html" class="navbar-link">Children</a></li>
+        <li><a href="/therapists.html" class="navbar-link">Therapists</a></li>
+        <li><a href="/help.html" class="navbar-link">Help</a></li>
+        <li><a href="/account.html" class="navbar-link" id="account-link">Account</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" style="padding: var(--space-12) 0; background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg) 100%);">
+      <div class="container">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <h1 style="margin-bottom: var(--space-4);">
+            Early Detection, Clear Direction
+          </h1>
+          <p style="font-size: var(--font-size-lg); color: var(--color-text-muted); margin-bottom: var(--space-6);">
+            Simple screening for early signs of ASD, ADHD, and Dyslexia — and therapist suggestions nearby.
+          </p>
+          <div class="flex gap-3" style="justify-content: center; flex-wrap: wrap;">
+            <a href="/screening.html" class="btn btn-primary btn-lg">
+              <span id="clipboard-icon"></span>
+              Start Screening
+            </a>
+            <a href="#how-it-works" class="btn btn-ghost btn-lg">
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Banner -->
+    <section style="background: var(--color-warning-light); border-top: 2px solid var(--color-warning); border-bottom: 2px solid var(--color-warning); padding: var(--space-4) 0;">
+      <div class="container">
+        <div class="flex items-center gap-3" style="justify-content: center; text-align: center;">
+          <span id="info-icon"></span>
+          <p style="margin: 0; color: #92400E; font-weight: var(--font-weight-medium);">
+            <strong>Important:</strong> This is an informational screening tool, not a clinical diagnosis. Always consult qualified healthcare professionals.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" style="padding: var(--space-12) 0;">
+      <div class="container">
+        <h2 class="text-center" style="margin-bottom: var(--space-8);">How It Works</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
+          <!-- Step 1 -->
+          <div class="card text-center">
+            <div style="width: 64px; height: 64px; margin: 0 auto var(--space-4); background: var(--color-primary-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--color-primary);">
+              <span id="step1-icon" style="width: 32px; height: 32px;"></span>
+            </div>
+            <h3 style="margin-bottom: var(--space-2);">Create Account</h3>
+            <p class="text-muted">
+              Sign up and add your child's profile with basic information.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="card text-center">
+            <div style="width: 64px; height: 64px; margin: 0 auto var(--space-4); background: var(--color-secondary-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--color-secondary);">
+              <span id="step2-icon" style="width: 32px; height: 32px;"></span>
+            </div>
+            <h3 style="margin-bottom: var(--space-2);">Complete Screening</h3>
+            <p class="text-muted">
+              Answer simple questionnaires for ASD, ADHD, or Dyslexia.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="card text-center">
+            <div style="width: 64px; height: 64px; margin: 0 auto var(--space-4); background: var(--color-accent-light); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--color-accent);">
+              <span id="step3-icon" style="width: 32px; height: 32px;"></span>
+            </div>
+            <h3 style="margin-bottom: var(--space-2);">Get Results</h3>
+            <p class="text-muted">
+              View clear results and nearby therapist recommendations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section style="padding: var(--space-12) 0; background: var(--color-surface);">
+      <div class="container">
+        <h2 class="text-center" style="margin-bottom: var(--space-8);">Why Parents Trust Us</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); max-width: 900px; margin: 0 auto;">
+          <div class="flex gap-3">
+            <div style="flex-shrink: 0; color: var(--color-primary);">
+              <span id="check-icon"></span>
+            </div>
+            <div>
+              <h4 style="margin-bottom: var(--space-2);">Evidence-Based Questions</h4>
+              <p class="text-muted">
+                Screening questions based on established diagnostic criteria.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <div style="flex-shrink: 0; color: var(--color-primary);">
+              <span id="check-icon-2"></span>
+            </div>
+            <div>
+              <h4 style="margin-bottom: var(--space-2);">Simple & Clear</h4>
+              <p class="text-muted">
+                Easy to understand language, no medical jargon.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <div style="flex-shrink: 0; color: var(--color-primary);">
+              <span id="check-icon-3"></span>
+            </div>
+            <div>
+              <h4 style="margin-bottom: var(--space-2);">Local Therapists</h4>
+              <p class="text-muted">
+                Find qualified therapist centers in your area.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <div style="flex-shrink: 0; color: var(--color-primary);">
+              <span id="check-icon-4"></span>
+            </div>
+            <div>
+              <h4 style="margin-bottom: var(--space-2);">Privacy First</h4>
+              <p class="text-muted">
+                Your data is secure and never shared without consent.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: var(--space-12) 0;">
+      <div class="container">
+        <div class="card" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%); color: white; text-align: center; padding: var(--space-8);">
+          <h2 style="color: white; margin-bottom: var(--space-4);">
+            Ready to Get Started?
+          </h2>
+          <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-6); opacity: 0.95;">
+            Create your free account and complete your first screening in minutes.
+          </p>
+          <div class="flex gap-3" style="justify-content: center; flex-wrap: wrap;">
+            <a href="/signup.html" class="btn btn-lg" style="background: white; color: var(--color-primary); border: none;">
+              Create Account
+            </a>
+            <a href="/login.html" class="btn btn-lg" style="background: transparent; color: white; border: 2px solid white;">
+              Log In
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--color-surface); border-top: 1px solid var(--color-border); padding: var(--space-8) 0; margin-top: var(--space-12);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); margin-bottom: var(--space-6);">
+        <div>
+          <h4 style="margin-bottom: var(--space-3);">Detection to Direction</h4>
+          <p class="text-muted" style="font-size: var(--font-size-sm);">
+            Early screening for developmental conditions with professional guidance.
+          </p>
+        </div>
+
+        <div>
+          <h5 style="margin-bottom: var(--space-3);">Quick Links</h5>
+          <ul style="list-style: none; padding: 0; font-size: var(--font-size-sm);">
+            <li style="margin-bottom: var(--space-2);"><a href="/screening.html">Start Screening</a></li>
+            <li style="margin-bottom: var(--space-2);"><a href="/children.html">Manage Children</a></li>
+            <li style="margin-bottom: var(--space-2);"><a href="/therapists.html">Find Therapists</a></li>
+            <li style="margin-bottom: var(--space-2);"><a href="/help.html">Help & FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 style="margin-bottom: var(--space-3);">Legal</h5>
+          <ul style="list-style: none; padding: 0; font-size: var(--font-size-sm);">
+            <li style="margin-bottom: var(--space-2);"><a href="/privacy.html">Privacy Policy</a></li>
+            <li style="margin-bottom: var(--space-2);"><a href="/terms.html">Terms of Service</a></li>
+            <li style="margin-bottom: var(--space-2);"><a href="/disclaimer.html">Medical Disclaimer</a></li>
+            <li style="margin-bottom: var(--space-2);"><a href="/contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-4); text-align: center;">
+        <p class="text-muted" style="font-size: var(--font-size-sm); margin: 0;">
+          &copy; 2025 Detection to Direction. Designed for clarity and care.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scripts -->
+  <script src="/js/icons.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/toast.js"></script>
+  <script>
+    // Initialize icons
+    document.getElementById('logo-icon').innerHTML = getIcon('brain');
+    document.getElementById('menu-icon').innerHTML = getIcon('menu');
+    document.getElementById('clipboard-icon').innerHTML = getIcon('clipboard');
+    document.getElementById('info-icon').innerHTML = getIcon('info');
+    document.getElementById('step1-icon').innerHTML = getIcon('user');
+    document.getElementById('step2-icon').innerHTML = getIcon('clipboard');
+    document.getElementById('step3-icon').innerHTML = getIcon('fileText');
+    document.getElementById('check-icon').innerHTML = getIcon('check');
+    document.getElementById('check-icon-2').innerHTML = getIcon('check');
+    document.getElementById('check-icon-3').innerHTML = getIcon('check');
+    document.getElementById('check-icon-4').innerHTML = getIcon('check');
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+      const menu = document.getElementById('navbar-menu');
+      const isOpen = menu.classList.toggle('open');
+      this.setAttribute('aria-expanded', isOpen);
+      this.querySelector('span').innerHTML = isOpen ? getIcon('x') : getIcon('menu');
+    });
+  </script>
+</body>
+</html>
