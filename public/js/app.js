@@ -324,38 +324,232 @@
   (async function updateNavigation() {
     try {
       const response = await api('/me');
-      const accountLink = q('#account-link') || q('a[href="/login.html"]');
+      const accountLinks = qa('#account-link, a[href="/login.html"]');
       
       if (response.ok && response.user) {
-        // User is logged in - show user name and logout option
-        if (accountLink) {
-          accountLink.textContent = response.user.name || 'Account';
-          accountLink.href = '#';
-          accountLink.style.cursor = 'pointer';
+        // User is logged in - update all account links
+        accountLinks.forEach(link => {
+          link.textContent = response.user.name || 'Account';
+          link.href = '/account.html';
+          link.style.cursor = 'pointer';
           
-          // Add logout functionality
-          accountLink.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const confirmed = confirm('Are you sure you want to log out?');
-            if (confirmed) {
-              await api('/logout');
-              if (typeof toast !== 'undefined') {
-                toast.show('Logged out successfully', 'info');
-              }
-              setTimeout(() => window.location.href = '/login.html', 500);
-            }
-          });
-        }
+          // Remove any existing click listeners
+          link.replaceWith(link.cloneNode(true));
+        });
       } else {
         // User is not logged in - show "Login" link
-        if (accountLink) {
-          accountLink.textContent = 'Login';
-          accountLink.href = '/login.html';
-        }
+        accountLinks.forEach(link => {
+          link.textContent = 'Login';
+          link.href = '/login.html';
+        });
       }
     } catch (error) {
       console.log('Navigation update failed:', error);
     }
   })();
+
+  // Account page functionality
+  if (window.location.pathname === '/account.html') {
+    (async function initAccountPage() {
+      const loadingAccount = q('#loadingAccount');
+      const notLoggedIn = q('#notLoggedIn');
+      const accountContent = q('#accountContent');
+      
+      try {
+        const response = await api('/me');
+        
+        if (response.ok && response.user) {
+          // User is logged in - show account content
+          loadingAccount.style.display = 'none';
+          accountContent.style.display = 'block';
+          
+          // Populate user data
+          q('#userName').textContent = response.user.name;
+          q('#userEmail').textContent = response.user.email;
+          q('#profileName').value = response.user.name;
+          q('#profileEmail').value = response.user.email;
+          
+          // Get children count
+          const childrenRes = await api('/children');
+          if (childrenRes.ok) {
+            q('#childrenCount').textContent = (childrenRes.children || []).length;
+          }
+          
+          // Get screenings count (we'll implement this later)
+          q('#screeningsCount').textContent = '0'; // Placeholder
+          
+        } else {
+          // User is not logged in
+          loadingAccount.style.display = 'none';
+          notLoggedIn.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Account page load failed:', error);
+        loadingAccount.style.display = 'none';
+        notLoggedIn.style.display = 'block';
+      }
+    })();
+
+    // Profile form handling
+    const profileForm = q('#profileForm');
+    if (profileForm) {
+      profileForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = profileForm.querySelector('button[type="submit"]');
+        const msgEl = q('#profileMsg');
+        const fd = new FormData(profileForm);
+        
+        submitBtn.disabled = true;
+        msgEl.style.display = 'none';
+        
+        try {
+          const response = await api('/profile', {
+            method: 'PUT',
+            body: JSON.stringify({
+              name: fd.get('name'),
+              email: fd.get('email')
+            })
+          });
+          
+          submitBtn.disabled = false;
+          
+          if (response.ok) {
+            msgEl.className = 'alert alert-success';
+            msgEl.style.display = 'block';
+            msgEl.innerHTML = '<span class="msg-icon"></span><div>' + (response.message || 'Profile updated successfully!') + '</div>';
+            if (typeof getIcon === 'function') {
+              const icon = msgEl.querySelector('.msg-icon');
+              if (icon) icon.innerHTML = getIcon('check');
+            }
+            if (typeof toast !== 'undefined') toast.show(response.message || 'Profile updated!', 'success');
+            
+            // Update display
+            q('#userName').textContent = fd.get('name');
+            q('#userEmail').textContent = fd.get('email');
+            
+            // Update navigation
+            qa('#account-link').forEach(link => {
+              link.textContent = fd.get('name');
+            });
+            
+          } else {
+            msgEl.className = 'alert alert-danger';
+            msgEl.style.display = 'block';
+            msgEl.innerHTML = '<span class="msg-icon"></span><div>' + (response.message || 'Failed to update profile') + '</div>';
+            if (typeof getIcon === 'function') {
+              const icon = msgEl.querySelector('.msg-icon');
+              if (icon) icon.innerHTML = getIcon('alertCircle');
+            }
+            if (typeof toast !== 'undefined') toast.show(response.message || 'Update failed', 'danger');
+          }
+        } catch (error) {
+          submitBtn.disabled = false;
+          msgEl.className = 'alert alert-danger';
+          msgEl.style.display = 'block';
+          msgEl.innerHTML = '<span class="msg-icon"></span><div>Network error. Please try again.</div>';
+          if (typeof getIcon === 'function') {
+            const icon = msgEl.querySelector('.msg-icon');
+            if (icon) icon.innerHTML = getIcon('alertCircle');
+          }
+          if (typeof toast !== 'undefined') toast.show('Network error', 'danger');
+        }
+      });
+    }
+
+    // Password form handling
+    const passwordForm = q('#passwordForm');
+    if (passwordForm) {
+      passwordForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = passwordForm.querySelector('button[type="submit"]');
+        const msgEl = q('#passwordMsg');
+        const fd = new FormData(passwordForm);
+        
+        // Validate passwords match
+        if (fd.get('newPassword') !== fd.get('confirmPassword')) {
+          msgEl.className = 'alert alert-danger';
+          msgEl.style.display = 'block';
+          msgEl.innerHTML = '<span class="msg-icon"></span><div>New passwords do not match</div>';
+          if (typeof getIcon === 'function') {
+            const icon = msgEl.querySelector('.msg-icon');
+            if (icon) icon.innerHTML = getIcon('alertCircle');
+          }
+          return;
+        }
+        
+        submitBtn.disabled = true;
+        msgEl.style.display = 'none';
+        
+        try {
+          const response = await api('/password', {
+            method: 'PUT',
+            body: JSON.stringify({
+              currentPassword: fd.get('currentPassword'),
+              newPassword: fd.get('newPassword')
+            })
+          });
+          
+          submitBtn.disabled = false;
+          
+          if (response.ok) {
+            msgEl.className = 'alert alert-success';
+            msgEl.style.display = 'block';
+            msgEl.innerHTML = '<span class="msg-icon"></span><div>' + (response.message || 'Password updated successfully!') + '</div>';
+            if (typeof getIcon === 'function') {
+              const icon = msgEl.querySelector('.msg-icon');
+              if (icon) icon.innerHTML = getIcon('check');
+            }
+            if (typeof toast !== 'undefined') toast.show(response.message || 'Password updated!', 'success');
+            
+            // Reset form
+            passwordForm.reset();
+            
+          } else {
+            msgEl.className = 'alert alert-danger';
+            msgEl.style.display = 'block';
+            msgEl.innerHTML = '<span class="msg-icon"></span><div>' + (response.message || 'Failed to update password') + '</div>';
+            if (typeof getIcon === 'function') {
+              const icon = msgEl.querySelector('.msg-icon');
+              if (icon) icon.innerHTML = getIcon('alertCircle');
+            }
+            if (typeof toast !== 'undefined') toast.show(response.message || 'Update failed', 'danger');
+          }
+        } catch (error) {
+          submitBtn.disabled = false;
+          msgEl.className = 'alert alert-danger';
+          msgEl.style.display = 'block';
+          msgEl.innerHTML = '<span class="msg-icon"></span><div>Network error. Please try again.</div>';
+          if (typeof getIcon === 'function') {
+            const icon = msgEl.querySelector('.msg-icon');
+            if (icon) icon.innerHTML = getIcon('alertCircle');
+          }
+          if (typeof toast !== 'undefined') toast.show('Network error', 'danger');
+        }
+      });
+    }
+
+    // Logout button
+    const logoutBtn = q('#logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        const confirmed = confirm('Are you sure you want to log out?');
+        if (confirmed) {
+          await api('/logout');
+          if (typeof toast !== 'undefined') {
+            toast.show('Logged out successfully', 'info');
+          }
+          setTimeout(() => window.location.href = '/login.html', 500);
+        }
+      });
+    }
+
+    // Cancel edit button
+    const cancelEdit = q('#cancelEdit');
+    if (cancelEdit) {
+      cancelEdit.addEventListener('click', () => {
+        window.location.reload();
+      });
+    }
+  }
 
 })();

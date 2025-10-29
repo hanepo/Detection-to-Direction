@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your Detection to Direction account and profile">
+  <title>My Account - Detection to Direction</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- NEW Design System Styles -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="/" class="navbar-brand">
+        <span id="logo-icon"></span>
+        Detection to Direction
+      </a>
+      <button class="navbar-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+        <span id="menu-icon"></span>
+      </button>
+      <ul class="navbar-nav" id="navbar-menu">
+        <li><a href="/" class="navbar-link">Home</a></li>
+        <li><a href="/screening.html" class="navbar-link">Screening</a></li>
+        <li><a href="/add_child.html" class="navbar-link">Children</a></li>
+        <li><a href="/therapists.html" class="navbar-link">Therapists</a></li>
+        <li><a href="/help.html" class="navbar-link">Help</a></li>
+        <li><a href="/account.html" class="navbar-link active" id="account-link">Account</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-8);">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">My Account</li>
+        </ol>
+      </nav>
+
+      <!-- Page Header -->
+      <div style="margin-bottom: var(--space-6);">
+        <h1 style="margin-bottom: var(--space-2);">My Account</h1>
+        <p class="text-muted" style="font-size: var(--font-size-md);">
+          Manage your profile information and account settings.
+        </p>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingAccount" style="text-align: center; padding: var(--space-8);">
+        <div style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--color-primary);">
+          <span id="loading-icon"></span>
+        </div>
+        <p class="text-muted">Loading your account information...</p>
+      </div>
+
+      <!-- Not Logged In State -->
+      <div id="notLoggedIn" style="display: none;">
+        <div class="alert alert-warning">
+          <span id="warning-icon"></span>
+          <div>
+            <strong>Authentication Required</strong>
+            <p style="margin: var(--space-2) 0 0 0;">You need to be logged in to view your account. Please log in or create an account.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+          <a href="/login.html" class="btn btn-primary">
+            <span id="login-btn-icon"></span>
+            Log In
+          </a>
+          <a href="/signup.html" class="btn btn-ghost">
+            <span id="signup-btn-icon"></span>
+            Create Account
+          </a>
+        </div>
+      </div>
+
+      <!-- Account Content -->
+      <div id="accountContent" style="display: none;">
+        
+        <!-- Account Overview Card -->
+        <div class="card" style="margin-bottom: var(--space-6);">
+          <div class="card-header">
+            <h2 class="card-title">Account Overview</h2>
+            <p class="card-description">Your account information and quick stats</p>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+              
+              <!-- User Info -->
+              <div style="display: flex; align-items: center; gap: var(--space-3);">
+                <div style="width: 56px; height: 56px; background: var(--color-primary-light); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: var(--color-primary);">
+                  <span id="user-avatar-icon"></span>
+                </div>
+                <div>
+                  <h3 id="userName" style="margin: 0; font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold);">-</h3>
+                  <p id="userEmail" class="text-muted" style="margin: 0; font-size: var(--font-size-sm);">-</p>
+                </div>
+              </div>
+
+              <!-- Children Count -->
+              <div style="text-align: center; padding: var(--space-4); background: var(--color-bg-subtle); border-radius: var(--radius-md);">
+                <div style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: var(--space-1);" id="childrenCount">0</div>
+                <p class="text-muted" style="margin: 0; font-size: var(--font-size-sm);">Children</p>
+              </div>
+
+              <!-- Screenings Count -->
+              <div style="text-align: center; padding: var(--space-4); background: var(--color-bg-subtle); border-radius: var(--radius-md);">
+                <div style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-secondary); margin-bottom: var(--space-1);" id="screeningsCount">0</div>
+                <p class="text-muted" style="margin: 0; font-size: var(--font-size-sm);">Screenings</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Settings Card -->
+        <div class="card" style="margin-bottom: var(--space-6);">
+          <div class="card-header">
+            <h2 class="card-title">Profile Settings</h2>
+            <p class="card-description">Update your personal information</p>
+          </div>
+          <div class="card-body">
+            <form id="profileForm">
+              <div class="form-group">
+                <label for="profileName" class="form-label form-label-required">
+                  <span id="profile-name-icon"></span>
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="profileName"
+                  name="name"
+                  class="form-input"
+                  placeholder="Enter your full name"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="profileEmail" class="form-label form-label-required">
+                  <span id="profile-email-icon"></span>
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="profileEmail"
+                  name="email"
+                  class="form-input"
+                  placeholder="your.email@example.com"
+                  required
+                >
+              </div>
+
+              <!-- Message Area -->
+              <div id="profileMsg" style="display: none; margin-bottom: var(--space-4);"></div>
+
+              <div style="display: flex; gap: var(--space-3);">
+                <button type="submit" class="btn btn-primary">
+                  <span id="save-icon"></span>
+                  Save Changes
+                </button>
+                <button type="button" class="btn btn-ghost" id="cancelEdit">
+                  <span id="cancel-icon"></span>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Change Password Card -->
+        <div class="card" style="margin-bottom: var(--space-6);">
+          <div class="card-header">
+            <h2 class="card-title">Change Password</h2>
+            <p class="card-description">Update your account password</p>
+          </div>
+          <div class="card-body">
+            <form id="passwordForm">
+              <div class="form-group">
+                <label for="currentPassword" class="form-label form-label-required">
+                  <span id="current-password-icon"></span>
+                  Current Password
+                </label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  name="currentPassword"
+                  class="form-input"
+                  placeholder="Enter current password"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="newPassword" class="form-label form-label-required">
+                  <span id="new-password-icon"></span>
+                  New Password
+                </label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  class="form-input"
+                  placeholder="Enter new password"
+                  required
+                  minlength="6"
+                >
+                <span class="form-helper">Password must be at least 6 characters long</span>
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword" class="form-label form-label-required">
+                  <span id="confirm-password-icon"></span>
+                  Confirm New Password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  class="form-input"
+                  placeholder="Confirm new password"
+                  required
+                >
+              </div>
+
+              <!-- Message Area -->
+              <div id="passwordMsg" style="display: none; margin-bottom: var(--space-4);"></div>
+
+              <button type="submit" class="btn btn-secondary">
+                <span id="password-save-icon"></span>
+                Update Password
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Account Actions -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Account Actions</h2>
+            <p class="card-description">Manage your account</p>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+              <button class="btn btn-ghost" id="logoutBtn">
+                <span id="logout-icon"></span>
+                Log Out
+              </button>
+              <a href="/add_child.html" class="btn btn-ghost">
+                <span id="children-icon"></span>
+                Manage Children
+              </a>
+              <a href="/screening.html" class="btn btn-ghost">
+                <span id="screening-icon"></span>
+                Take Screening
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/icons.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    // Initialize icons
+    if (typeof getIcon === 'function') {
+      document.getElementById('logo-icon').innerHTML = getIcon('brain');
+      document.getElementById('menu-icon').innerHTML = getIcon('menu');
+      document.getElementById('loading-icon').innerHTML = getIcon('loader');
+      document.getElementById('warning-icon').innerHTML = getIcon('alertCircle');
+      document.getElementById('login-btn-icon').innerHTML = getIcon('logIn');
+      document.getElementById('signup-btn-icon').innerHTML = getIcon('userPlus');
+      document.getElementById('user-avatar-icon').innerHTML = getIcon('user');
+      document.getElementById('profile-name-icon').innerHTML = getIcon('user');
+      document.getElementById('profile-email-icon').innerHTML = getIcon('mail');
+      document.getElementById('save-icon').innerHTML = getIcon('check');
+      document.getElementById('cancel-icon').innerHTML = getIcon('x');
+      document.getElementById('current-password-icon').innerHTML = getIcon('lock');
+      document.getElementById('new-password-icon').innerHTML = getIcon('key');
+      document.getElementById('confirm-password-icon').innerHTML = getIcon('shield');
+      document.getElementById('password-save-icon').innerHTML = getIcon('check');
+      document.getElementById('logout-icon').innerHTML = getIcon('logOut');
+      document.getElementById('children-icon').innerHTML = getIcon('baby');
+      document.getElementById('screening-icon').innerHTML = getIcon('fileText');
+    }
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-toggle')?.addEventListener('click', function() {
+      const menu = document.getElementById('navbar-menu');
+      const isOpen = menu.classList.toggle('open');
+      this.setAttribute('aria-expanded', isOpen);
+      this.querySelector('span').innerHTML = isOpen ? getIcon('x') : getIcon('menu');
+    });
+  </script>
+</body>
+</html>

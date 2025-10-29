@@ -58,4 +58,63 @@ router.get('/me', async (req, res) => {
   }
 });
 
+// Update profile
+router.put('/profile', async (req, res) => {
+  const userId = req.session.userId;
+  if (!userId) return res.json({ ok: false, message: 'Not authenticated' });
+  
+  const { name, email } = req.body;
+  if (!name || !email) return res.json({ ok: false, message: 'Missing fields' });
+  
+  try {
+    const pool = req.pool;
+    
+    // Check if email is already taken by another user
+    const [existingUsers] = await pool.query('SELECT id FROM users WHERE email = ? AND id != ?', [email, userId]);
+    if (existingUsers.length > 0) {
+      return res.json({ ok: false, message: 'Email address is already in use' });
+    }
+    
+    // Update user profile
+    await pool.query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, userId]);
+    
+    res.json({ ok: true, message: 'Profile updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ ok: false, message: 'Server error' });
+  }
+});
+
+// Change password
+router.put('/password', async (req, res) => {
+  const userId = req.session.userId;
+  if (!userId) return res.json({ ok: false, message: 'Not authenticated' });
+  
+  const { currentPassword, newPassword } = req.body;
+  if (!currentPassword || !newPassword) return res.json({ ok: false, message: 'Missing fields' });
+  
+  try {
+    const pool = req.pool;
+    
+    // Get current user
+    const [rows] = await pool.query('SELECT password_hash FROM users WHERE id = ?', [userId]);
+    if (!rows.length) return res.json({ ok: false, message: 'User not found' });
+    
+    // Verify current password
+    const match = await bcrypt.compare(currentPassword, rows[0].password_hash);
+    if (!match) return res.json({ ok: false, message: 'Current password is incorrect' });
+    
+    // Hash new password
+    const newHash = await bcrypt.hash(newPassword, 10);
+    
+    // Update password
+    await pool.query('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, userId]);
+    
+    res.json({ ok: true, message: 'Password updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ ok: false, message: 'Server error' });
+  }
+});
+
 module.exports = router;
