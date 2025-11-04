@@ -10,6 +10,21 @@
   // Useful helpers
   function q(sel){ return document.querySelector(sel); }
   function qa(sel){ return document.querySelectorAll(sel); }
+  
+  // Calculate age from date of birth
+  function calculateAge(dateOfBirth) {
+    const dob = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    
+    // Adjust age if birthday hasn't occurred this year
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+    
+    return age;
+  }
 
   // Signup form
   const signupForm = q('#signupForm');
@@ -134,7 +149,9 @@
         }
       } else {
         list.innerHTML = '<div style="display: grid; gap: var(--space-4);">' + 
-          children.map(c => `
+          children.map(c => {
+            const age = calculateAge(c.date_of_birth);
+            return `
             <div class="card" style="padding: var(--space-4);">
               <div style="display: flex; align-items: start; gap: var(--space-3);">
                 <div style="width: 48px; height: 48px; background: var(--color-primary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0;">
@@ -143,7 +160,7 @@
                 <div style="flex: 1; min-width: 0;">
                   <h3 style="margin: 0 0 var(--space-2) 0; font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold);">${c.name}</h3>
                   <p style="margin: 0; color: var(--color-text-muted); font-size: var(--font-size-sm);">
-                    <strong>Age:</strong> ${c.age} years old
+                    <strong>Age:</strong> ${age} years old (Born: ${new Date(c.date_of_birth).toLocaleDateString()})
                   </p>
                   ${c.notes ? `<p style="margin: var(--space-2) 0 0 0; color: var(--color-text-muted); font-size: var(--font-size-sm);"><strong>Notes:</strong> ${c.notes}</p>` : ''}
                 </div>
@@ -157,7 +174,7 @@
                 </div>
               </div>
             </div>
-          `).join('') + '</div>';
+          `}).join('') + '</div>';
         
         // Initialize icons for each child card
         if (typeof getIcon === 'function') {
@@ -176,7 +193,10 @@
     // Update dropdown select for screening page
     if (select){
       select.innerHTML = '<option value="">-- Select a child --</option>' + 
-        children.map(c=>`<option value="${c.id}">${c.name} (age ${c.age})</option>`).join('');
+        children.map(c => {
+          const age = calculateAge(c.date_of_birth);
+          return `<option value="${c.id}">${c.name} (${age} years old)</option>`;
+        }).join('');
     }
   }
   if (childForm){
@@ -184,7 +204,7 @@
       e.preventDefault();
       const msgEl = q('#childMsg');
       const fd = new FormData(childForm);
-      const body = { name: fd.get('name'), age: fd.get('age'), notes: fd.get('notes') };
+      const body = { name: fd.get('name'), date_of_birth: fd.get('date_of_birth'), notes: fd.get('notes') };
 
       try {
         const res = await api('/children', { method:'POST', body: JSON.stringify(body) });
@@ -225,78 +245,291 @@
     refreshChildren();
   }
 
-  // Screening
+  // Screening - Combined All Disorders
   const questionArea = q('#questionArea');
   const resultArea = q('#resultArea');
-  if (q('#startAsd') || q('#startAdhd') || q('#startDys')){
-    const disorders = { '#startAsd': 'ASD', '#startAdhd': 'ADHD', '#startDys': 'Dyslexia' };
-    Object.keys(disorders).forEach(btnSel=>{
-      const btn = q(btnSel);
-      if (!btn) return;
-      btn.addEventListener('click', async ()=>{
-        const childId = q('#childSelect') ? q('#childSelect').value : null;
-        if (!childId){ alert('Please add/select a child first.'); return; }
-        const disorder = disorders[btnSel];
-        const qs = await api(`/questions?disorder=${disorder}`);
-        if (!qs.ok){ questionArea.innerHTML = '<p class="muted-note">Problem loading questions. Please log in.</p>'; return; }
-        const questions = qs.questions || [];
-        // Build UI
-        questionArea.innerHTML = `<h3>${disorder} Questionnaire</h3>`;
-        questions.forEach(qObj=>{
-          const div = document.createElement('div');
-          div.className='question';
-          div.dataset.id = qObj.id;
-          div.innerHTML = `<div><strong>${qObj.question_text}</strong></div>`;
-          const choices = document.createElement('div');
-          choices.className='choices';
-          const labels = ['Never','Rarely','Sometimes','Often','Very Often'];
-          labels.forEach((lab, idx)=>{
+  const progressArea = q('#progressArea');
+  const progressBar = q('#progressBar');
+  const progressText = q('#progressText');
+  const startScreeningBtn = q('#startScreening');
+  
+  if (startScreeningBtn){
+    startScreeningBtn.addEventListener('click', async ()=>{
+      const childId = q('#childSelect') ? q('#childSelect').value : null;
+      if (!childId){ 
+        alert('Please select a child first.'); 
+        return; 
+      }
+      
+      // Load all questions
+      const qs = await api(`/questions`);
+      if (!qs.ok){ 
+        questionArea.innerHTML = '<div class="alert alert-danger"><span></span><div>Problem loading questions. Please try again.</div></div>'; 
+        return; 
+      }
+      
+      const allQuestions = qs.questions || [];
+      if (allQuestions.length === 0) {
+        questionArea.innerHTML = '<div class="alert alert-warning"><span></span><div>No questions found in database.</div></div>';
+        return;
+      }
+      
+      // Hide start button, show progress
+      startScreeningBtn.style.display = 'none';
+      progressArea.style.display = 'block';
+      
+      // Group questions by disorder
+      const questionsByDisorder = {
+        ASD: allQuestions.filter(q => q.disorder === 'ASD'),
+        ADHD: allQuestions.filter(q => q.disorder === 'ADHD'),
+        Dyslexia: allQuestions.filter(q => q.disorder === 'Dyslexia')
+      };
+      
+      // Build combined questionnaire UI
+      questionArea.innerHTML = `
+        <div class="card" style="margin-bottom: var(--space-4);">
+          <div class="card-header">
+            <h3 class="card-title" style="margin: 0;">Complete Developmental Screening</h3>
+            <p class="card-description">Please answer all ${allQuestions.length} questions honestly. There are no right or wrong answers.</p>
+          </div>
+        </div>
+      `;
+      
+      // Add sections for each disorder
+      ['ASD', 'ADHD', 'Dyslexia'].forEach((disorder, sectionIndex) => {
+        const questions = questionsByDisorder[disorder];
+        if (questions.length === 0) return;
+        
+        const sectionCard = document.createElement('div');
+        sectionCard.className = 'card';
+        sectionCard.style.marginBottom = 'var(--space-4)';
+        
+        const disorderInfo = {
+          ASD: { name: 'Autism Spectrum Disorder (ASD)', color: 'var(--color-primary)' },
+          ADHD: { name: 'Attention-Deficit/Hyperactivity Disorder (ADHD)', color: 'var(--color-secondary)' },
+          Dyslexia: { name: 'Dyslexia', color: 'var(--color-accent)' }
+        };
+        
+        sectionCard.innerHTML = `
+          <div class="card-header" style="background: ${disorderInfo[disorder].color}15; border-bottom: 2px solid ${disorderInfo[disorder].color};">
+            <h4 style="margin: 0; color: ${disorderInfo[disorder].color}; font-size: var(--font-size-lg);">
+              Section ${sectionIndex + 1}: ${disorderInfo[disorder].name}
+            </h4>
+            <p style="margin: var(--space-2) 0 0 0; color: var(--color-text-muted); font-size: var(--font-size-sm);">
+              ${questions.length} questions
+            </p>
+          </div>
+          <div class="card-body" id="section-${disorder}"></div>
+        `;
+        
+        questionArea.appendChild(sectionCard);
+        
+        const sectionBody = q(`#section-${disorder}`);
+        questions.forEach((qObj, index) => {
+          const questionDiv = document.createElement('div');
+          questionDiv.className = 'form-group';
+          questionDiv.dataset.id = qObj.id;
+          questionDiv.dataset.disorder = disorder;
+          questionDiv.style.paddingBottom = 'var(--space-4)';
+          questionDiv.style.borderBottom = index < questions.length - 1 ? '1px solid var(--color-border)' : 'none';
+          questionDiv.style.marginBottom = 'var(--space-4)';
+          
+          questionDiv.innerHTML = `
+            <label class="form-label" style="font-weight: var(--font-weight-semibold); margin-bottom: var(--space-3);">
+              ${index + 1}. ${qObj.question_text}
+            </label>
+            <div class="choices" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: var(--space-2);"></div>
+          `;
+          
+          const choicesDiv = questionDiv.querySelector('.choices');
+          const labels = ['Never', 'Rarely', 'Sometimes', 'Often', 'Very Often'];
+          
+          labels.forEach((label, idx) => {
             const btn = document.createElement('button');
-            btn.type='button';
-            btn.className='choice';
-            btn.textContent = lab;
-            btn.dataset.score = idx; // 0..4
-            btn.addEventListener('click', ()=>{
-              // unselect siblings
-              choices.querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));
-              btn.classList.add('selected');
-              div.dataset.score = btn.dataset.score;
+            btn.type = 'button';
+            btn.className = 'btn btn-ghost';
+            btn.style.fontSize = 'var(--font-size-sm)';
+            btn.textContent = label;
+            btn.dataset.score = idx;
+            
+            btn.addEventListener('click', () => {
+              // Unselect siblings
+              choicesDiv.querySelectorAll('.btn').forEach(b => {
+                b.classList.remove('btn-primary');
+                b.classList.add('btn-ghost');
+              });
+              btn.classList.remove('btn-ghost');
+              btn.classList.add('btn-primary');
+              questionDiv.dataset.score = idx;
+              
+              // Update progress
+              updateProgress();
             });
-            choices.appendChild(btn);
+            
+            choicesDiv.appendChild(btn);
           });
-          div.appendChild(choices);
-          questionArea.appendChild(div);
+          
+          sectionBody.appendChild(questionDiv);
         });
-        // Submit button
-        const submitBtn = document.createElement('button');
-        submitBtn.className='btn primary';
-        submitBtn.textContent='Submit Responses';
-        submitBtn.addEventListener('click', async ()=>{
-          // collect
-          const answers = Array.from(questionArea.querySelectorAll('.question')).map(d=>{
-            return { question_id: Number(d.dataset.id), answer_score: Number(d.dataset.score || 0) };
-          });
-          const stateVal = q('#stateInput') ? q('#stateInput').value : '';
-          const payload = { child_id: Number(childId), disorder, state: stateVal, answers };
-          const res = await api('/screening', { method:'POST', body: JSON.stringify(payload) });
-          if (!res) return;
-          // display results
-          resultArea.innerHTML = '<h3>Screening result</h3>';
-          if (res.results && res.results.length){
-            resultArea.innerHTML += `<div class="result-highlight"><strong>Possible indicators:</strong><ul>${res.results.map(r=>`<li>${r}</li>`).join('')}</ul></div>`;
+      });
+      
+      // Add submit button
+      const submitDiv = document.createElement('div');
+      submitDiv.style.marginTop = 'var(--space-6)';
+      submitDiv.innerHTML = `
+        <button id="submitScreening" class="btn btn-primary btn-lg btn-full">
+          Submit Screening
+        </button>
+      `;
+      questionArea.appendChild(submitDiv);
+      
+      // Update progress function
+      function updateProgress() {
+        const total = allQuestions.length;
+        const answered = questionArea.querySelectorAll('.form-group[data-score]').length;
+        const percentage = Math.round((answered / total) * 100);
+        progressBar.style.width = percentage + '%';
+        progressText.textContent = percentage + '%';
+      }
+      
+      // Submit button handler
+      q('#submitScreening').addEventListener('click', async () => {
+        const allDivs = questionArea.querySelectorAll('[data-id]');
+        const answers = [];
+        let unanswered = 0;
+        
+        allDivs.forEach(div => {
+          if (div.dataset.score !== undefined) {
+            answers.push({
+              question_id: div.dataset.id,
+              disorder: div.dataset.disorder,
+              score: parseInt(div.dataset.score)
+            });
           } else {
-            resultArea.innerHTML += `<div class="result-highlight"><strong>No significant signs detected</strong><p class="muted-note">If you still have concerns, consult a professional.</p></div>`;
-          }
-          // show therapist recommendations (if any)
-          if (res.therapists && res.therapists.length){
-            resultArea.innerHTML += '<h4>Recommended therapist centers</h4><ul>' + res.therapists.map(t=>`<li><strong>${t.name}</strong><br>${t.address} — ${t.phone}<br><a href="${t.website}" target="_blank">${t.website}</a></li>`).join('') + '</ul>';
-          } else {
-            resultArea.innerHTML += '<p class="muted-note">No nearby centers found for this condition and location.</p>';
+            unanswered++;
           }
         });
-        questionArea.appendChild(submitBtn);
+        
+        if (unanswered > 0) {
+          alert(`Please answer all questions. ${unanswered} question(s) remaining.`);
+          return;
+        }
+        
+        // Calculate scores per disorder
+        const scores = {
+          ASD: { total: 0, count: 0, max: 0 },
+          ADHD: { total: 0, count: 0, max: 0 },
+          Dyslexia: { total: 0, count: 0, max: 0 }
+        };
+        
+        answers.forEach(ans => {
+          scores[ans.disorder].total += ans.score;
+          scores[ans.disorder].count++;
+          scores[ans.disorder].max += 4; // Max score per question is 4
+        });
+        
+        // Save to database
+        const payload = {
+          child_id: childId,
+          answers: answers,
+          state: q('#stateInput') ? q('#stateInput').value : ''
+        };
+        
+        const saveRes = await api('/screening', { method: 'POST', body: JSON.stringify(payload) });
+        
+        // Display combined results
+        displayCombinedResults(scores, saveRes.ok);
       });
     });
+  }
+  
+  // Display combined results function
+  function displayCombinedResults(scores, saved) {
+    questionArea.innerHTML = '';
+    progressArea.style.display = 'none';
+    
+    const interpretScore = (score, maxScore) => {
+      const percentage = (score / maxScore) * 100;
+      if (percentage < 25) return { level: 'Low', color: 'var(--color-success)', message: 'Low indicators' };
+      if (percentage < 50) return { level: 'Mild', color: 'var(--color-warning)', message: 'Mild indicators - monitoring recommended' };
+      if (percentage < 75) return { level: 'Moderate', color: 'var(--color-warning)', message: 'Moderate indicators - professional evaluation recommended' };
+      return { level: 'High', color: 'var(--color-danger)', message: 'High indicators - professional evaluation strongly recommended' };
+    };
+    
+    resultArea.innerHTML = `
+      <div class="card" style="margin-top: var(--space-6);">
+        <div class="card-header">
+          <h3 class="card-title">Screening Results</h3>
+          <p class="card-description">Complete developmental screening assessment</p>
+        </div>
+        <div class="card-body">
+          ${saved ? '<div class="alert alert-success" style="margin-bottom: var(--space-4);"><span></span><div>Results saved successfully!</div></div>' : ''}
+          
+          ${['ASD', 'ADHD', 'Dyslexia'].map(disorder => {
+            const scoreData = scores[disorder];
+            const interpretation = interpretScore(scoreData.total, scoreData.max);
+            const percentage = Math.round((scoreData.total / scoreData.max) * 100);
+            
+            const fullNames = {
+              ASD: 'Autism Spectrum Disorder',
+              ADHD: 'Attention-Deficit/Hyperactivity Disorder',
+              Dyslexia: 'Dyslexia'
+            };
+            
+            return `
+              <div class="card" style="margin-bottom: var(--space-4); border-left: 4px solid ${interpretation.color};">
+                <div class="card-body">
+                  <h4 style="margin: 0 0 var(--space-3) 0; font-size: var(--font-size-lg);">${fullNames[disorder]}</h4>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-3);">
+                    <div>
+                      <p style="margin: 0; color: var(--color-text-muted); font-size: var(--font-size-sm);">Score</p>
+                      <p style="margin: 0; font-size: var(--font-size-xl); font-weight: var(--font-weight-bold);">${scoreData.total} / ${scoreData.max}</p>
+                    </div>
+                    <div>
+                      <p style="margin: 0; color: var(--color-text-muted); font-size: var(--font-size-sm);">Percentage</p>
+                      <p style="margin: 0; font-size: var(--font-size-xl); font-weight: var(--font-weight-bold);">${percentage}%</p>
+                    </div>
+                  </div>
+                  <div class="progress" style="margin-bottom: var(--space-3);">
+                    <div class="progress-bar" style="width: ${percentage}%; background: ${interpretation.color};"></div>
+                  </div>
+                  <div class="alert" style="background: ${interpretation.color}15; border-color: ${interpretation.color}; margin: 0;">
+                    <span style="color: ${interpretation.color};">●</span>
+                    <div>
+                      <strong style="color: ${interpretation.color};">${interpretation.level} Risk Level</strong>
+                      <p style="margin: var(--space-1) 0 0 0;">${interpretation.message}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+          
+          <div class="alert alert-info">
+            <span></span>
+            <div>
+              <strong>Important Disclaimer</strong>
+              <p style="margin: var(--space-2) 0 0 0;">This screening tool provides preliminary information only and does not replace professional medical evaluation or diagnosis. Please consult with qualified healthcare professionals for proper assessment and guidance.</p>
+            </div>
+          </div>
+          
+          <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4); flex-wrap: wrap;">
+            <a href="/therapists.html" class="btn btn-primary">
+              Find Therapists
+            </a>
+            <button class="btn btn-ghost" onclick="window.location.reload()">
+              Take Another Screening
+            </button>
+            <a href="/add_child.html" class="btn btn-ghost">
+              Manage Children
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Scroll to results
+    resultArea.scrollIntoView({ behavior: 'smooth' });
   }
 
   // Therapist search page

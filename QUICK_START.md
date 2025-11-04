@@ -9,13 +9,15 @@
 ### 2️⃣ Import Database (ONE FILE!)
 Go to: http://localhost/phpmyadmin
 
+**IMPORTANT**: If you have an old database, delete it first, then:
+
 **Click "SQL" tab**  
 **Copy ALL content from `sql/COMPLETE_SETUP.sql`**  
 **Paste → Click "Go"**
 
 ✅ That's it! One file does everything:
 - Creates database
-- Creates 6 tables
+- Creates 6 tables (with updated schema for Date of Birth)
 - Adds 70 questions
 - Adds 12 therapist centers
 
@@ -30,14 +32,29 @@ Go to: http://localhost:3000
 
 ---
 
+## ✨ New Features Implemented!
+
+### 🎂 Automatic Age Calculation
+- Parents now enter **Date of Birth** instead of age
+- Age is **automatically calculated** and displayed
+- Age updates automatically as time passes
+
+### 📋 Combined Screening Assessment
+- **All screening questions** (ASD + ADHD + Dyslexia) are shown together
+- Complete **70 questions in one session**
+- Results show **all three disorders** with individual scores and risk levels
+- Professional interpretation for each condition
+
+---
+
 ## That's It! 🎉
 
 You should now have:
 - ✅ Database: `detection_to_direction`
-- ✅ 6 tables (users, children, questions, therapists, screenings, screening_answers)
+- ✅ 6 tables (users, children with DOB, questions, therapists, screenings, screening_answers)
 - ✅ 70 screening questions (20 ASD + 25 ADHD + 25 Dyslexia)
 - ✅ 12 therapist centers
-- ✅ Working application
+- ✅ Working application with new features
 
 ---
 

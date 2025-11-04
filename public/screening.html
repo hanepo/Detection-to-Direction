@@ -101,69 +101,15 @@
             <span class="form-helper">Enter your location to get nearby therapist recommendations</span>
           </div>
 
-          <!-- Disorder Selection Buttons -->
+          <!-- Start Screening Button -->
           <div class="form-group">
-            <label class="form-label">Select Screening Type</label>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-3); margin-top: var(--space-3);">
-
-              <!-- ASD Card -->
-              <div class="card" style="cursor: pointer; transition: all 0.2s; border: 2px solid var(--color-border);" id="asdCard">
-                <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
-                  <div style="width: 48px; height: 48px; background: var(--color-primary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-primary);">
-                    <span id="brain-icon"></span>
-                  </div>
-                  <div>
-                    <h4 style="margin: 0;">ASD</h4>
-                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">20 questions</p>
-                  </div>
-                </div>
-                <p style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">
-                  Autism Spectrum Disorder screening
-                </p>
-                <button id="startAsd" class="btn btn-primary btn-full">
-                  Start ASD Screening
-                </button>
-              </div>
-
-              <!-- ADHD Card -->
-              <div class="card" style="cursor: pointer; transition: all 0.2s; border: 2px solid var(--color-border);" id="adhdCard">
-                <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
-                  <div style="width: 48px; height: 48px; background: var(--color-secondary-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-secondary);">
-                    <span id="activity-icon"></span>
-                  </div>
-                  <div>
-                    <h4 style="margin: 0;">ADHD</h4>
-                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">25 questions</p>
-                  </div>
-                </div>
-                <p style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">
-                  Attention-Deficit/Hyperactivity Disorder
-                </p>
-                <button id="startAdhd" class="btn btn-secondary btn-full">
-                  Start ADHD Screening
-                </button>
-              </div>
-
-              <!-- Dyslexia Card -->
-              <div class="card" style="cursor: pointer; transition: all 0.2s; border: 2px solid var(--color-border);" id="dysCard">
-                <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
-                  <div style="width: 48px; height: 48px; background: var(--color-accent-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--color-accent);">
-                    <span id="book-icon"></span>
-                  </div>
-                  <div>
-                    <h4 style="margin: 0;">Dyslexia</h4>
-                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">25 questions</p>
-                  </div>
-                </div>
-                <p style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">
-                  Reading and learning differences
-                </p>
-                <button id="startDys" class="btn btn-full" style="background: var(--color-accent); color: white; border: none;">
-                  Start Dyslexia Screening
-                </button>
-              </div>
-
-            </div>
+            <button id="startScreening" class="btn btn-primary btn-lg btn-full">
+              <span id="start-icon"></span>
+              Start Complete Screening
+            </button>
+            <span class="form-helper" style="text-align: center; display: block; margin-top: var(--space-2);">
+              This screening includes questions for ASD, ADHD, and Dyslexia (70 questions total)
+            </span>
           </div>
 
           <!-- Progress Area (Hidden initially) -->
@@ -211,9 +157,7 @@
     document.getElementById('alert-icon').innerHTML = getIcon('alertCircle');
     document.getElementById('child-icon').innerHTML = getIcon('baby');
     document.getElementById('location-icon').innerHTML = getIcon('mapPin');
-    document.getElementById('brain-icon').innerHTML = getIcon('brain');
-    document.getElementById('activity-icon').innerHTML = getIcon('users');
-    document.getElementById('book-icon').innerHTML = getIcon('fileText');
+    document.getElementById('start-icon').innerHTML = getIcon('play');
     document.getElementById('back-icon').innerHTML = getIcon('chevronLeft');
 
     // Mobile menu toggle
@@ -222,21 +166,6 @@
       const isOpen = menu.classList.toggle('open');
       this.setAttribute('aria-expanded', isOpen);
       this.querySelector('span').innerHTML = isOpen ? getIcon('x') : getIcon('menu');
-    });
-
-    // Add hover effects to disorder cards
-    ['asdCard', 'adhdCard', 'dysCard'].forEach(id => {
-      const card = document.getElementById(id);
-      if (card) {
-        card.addEventListener('mouseenter', function() {
-          this.style.borderColor = 'var(--color-primary)';
-          this.style.boxShadow = 'var(--shadow-md)';
-        });
-        card.addEventListener('mouseleave', function() {
-          this.style.borderColor = 'var(--color-border)';
-          this.style.boxShadow = 'var(--shadow-sm)';
-        });
-      }
     });
   </script>
 </body>

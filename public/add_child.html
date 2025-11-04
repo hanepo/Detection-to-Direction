@@ -85,20 +85,19 @@
             </div>
 
             <div class="form-group">
-              <label for="childAge" class="form-label form-label-required">
-                Age
+              <label for="childDob" class="form-label form-label-required">
+                <span id="dob-icon"></span>
+                Date of Birth
               </label>
               <input
-                type="number"
-                id="childAge"
-                name="age"
+                type="date"
+                id="childDob"
+                name="date_of_birth"
                 class="form-input"
-                min="1"
-                max="25"
-                placeholder="Enter age"
                 required
+                max=""
               >
-              <span class="form-helper">Age in years</span>
+              <span class="form-helper" id="ageDisplay">Age will be calculated automatically</span>
             </div>
 
             <div class="form-group">
@@ -156,6 +155,38 @@
     document.getElementById('menu-icon').innerHTML = getIcon('menu');
     document.getElementById('child-header-icon').innerHTML = getIcon('users');
     document.getElementById('add-icon').innerHTML = getIcon('plus');
+    if (document.getElementById('dob-icon')) {
+      document.getElementById('dob-icon').innerHTML = getIcon('calendar');
+    }
+
+    // Set max date to today for DOB field
+    const dobInput = document.getElementById('childDob');
+    if (dobInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dobInput.setAttribute('max', today);
+      
+      // Calculate and display age when DOB changes
+      dobInput.addEventListener('change', function() {
+        const dob = new Date(this.value);
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        
+        // Adjust age if birthday hasn't occurred this year
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+          age--;
+        }
+        
+        const ageDisplay = document.getElementById('ageDisplay');
+        if (age >= 0 && age < 100) {
+          ageDisplay.textContent = `Current age: ${age} years old`;
+          ageDisplay.style.color = 'var(--color-success)';
+        } else {
+          ageDisplay.textContent = 'Please enter a valid date of birth';
+          ageDisplay.style.color = 'var(--color-danger)';
+        }
+      });
+    }
 
     // Mobile menu toggle
     document.getElementById('mobile-menu-toggle')?.addEventListener('click', function() {

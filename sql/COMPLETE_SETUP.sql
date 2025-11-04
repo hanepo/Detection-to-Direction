@@ -39,7 +39,7 @@ CREATE TABLE children (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
   name VARCHAR(255) NOT NULL,
-  age INT NOT NULL,
+  date_of_birth DATE NOT NULL,
   notes TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -87,18 +87,15 @@ CREATE TABLE therapists (
 CREATE TABLE screenings (
   id INT AUTO_INCREMENT PRIMARY KEY,
   child_id INT NOT NULL,
-  user_id INT NOT NULL,
-  disorder ENUM('ASD', 'ADHD', 'Dyslexia') NOT NULL,
-  state VARCHAR(100),
-  total_score INT DEFAULT 0,
-  results JSON,
+  screening_date DATETIME NOT NULL,
+  asd_score INT DEFAULT 0,
+  adhd_score INT DEFAULT 0,
+  dyslexia_score INT DEFAULT 0,
+  notes TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (child_id) REFERENCES children(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   INDEX idx_child_id (child_id),
-  INDEX idx_user_id (user_id),
-  INDEX idx_disorder (disorder),
-  INDEX idx_created_at (created_at)
+  INDEX idx_screening_date (screening_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Screening answers table

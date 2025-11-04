@@ -6,56 +6,61 @@ const screeningLogic = require('../screening_logic');
 router.post('/screening', async (req, res) => {
   try {
     const userId = req.session.userId;
-    if (!userId) return res.json({ ok:false, message:'Not authenticated' });
+    if (!userId) return res.json({ ok: false, message: 'Not authenticated' });
 
-    const { child_id, disorder, state, answers } = req.body;
-    if (!child_id || !disorder || !answers) return res.json({ ok:false, message:'Missing data' });
+    const { child_id, answers, state } = req.body;
+    if (!child_id || !answers || !Array.isArray(answers)) {
+      return res.json({ ok: false, message: 'Missing data' });
+    }
 
-    // Save each response
     const conn = req.pool;
-    const insertVals = answers.map(a=>[child_id, a.question_id, a.answer_score]);
-    if (insertVals.length){
-      await conn.query('INSERT INTO responses (child_id, question_id, answer_score) VALUES ?', [insertVals]);
+    
+    // Calculate total scores per disorder from answers
+    const scores = {
+      ASD: 0,
+      ADHD: 0,
+      Dyslexia: 0
+    };
+    
+    answers.forEach(ans => {
+      if (scores[ans.disorder] !== undefined) {
+        scores[ans.disorder] += ans.score;
+      }
+    });
+    
+    // Save screening record
+    const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const [screeningResult] = await conn.query(
+      'INSERT INTO screenings (child_id, screening_date, asd_score, adhd_score, dyslexia_score) VALUES (?, ?, ?, ?, ?)',
+      [child_id, timestamp, scores.ASD, scores.ADHD, scores.Dyslexia]
+    );
+    
+    const screeningId = screeningResult.insertId;
+    
+    // Save individual answers
+    if (answers.length > 0) {
+      const insertValues = answers.map(a => [
+        screeningId,
+        a.question_id,
+        a.score
+      ]);
+      await conn.query(
+        'INSERT INTO screening_answers (screening_id, question_id, answer_score) VALUES ?',
+        [insertValues]
+      );
     }
-
-    // Compute total per disorder (we can compute only for specified disorder or overall)
-    // For simplicity compute sum of scores for the requested disorder
-    const [qRows] = await conn.query(`
-      SELECT q.disorder_type, SUM(r.answer_score) AS total
-      FROM responses r
-      JOIN questions q ON q.id = r.question_id
-      WHERE r.child_id = ?
-      GROUP BY q.disorder_type
-    `, [child_id]);
-
-    const scores = { ASD:0, ADHD:0, Dyslexia:0 };
-    qRows.forEach(r=> { scores[r.disorder_type] = r.total; });
-
-    // Evaluate via rule logic
-    const { results, meta } = screeningLogic.evaluate(scores);
-
-    // Recommend therapists if results includes the disorder
-    // If user provided state, filter by state. We suggest centers for any detected disorder; else suggest none
-    let therapists = [];
-    if (results.length && state){
-      // pick first detected disorder to recommend for; but also search for all detected disorders
-      const detected = results.map(rt => {
-        // Example string "Possible indicators of ASD"
-        const parts = rt.split(' ');
-        return parts[parts.length-1]; // ASD / ADHD / Dyslexia
-      });
-      const placeholders = detected.map(()=>'?').join(',');
-      const sql = `SELECT id, name, address, phone, website, state, disorder_type FROM therapist_centers WHERE disorder_type IN (${placeholders}) AND state LIKE ? LIMIT 20`;
-      const params = [...detected, `%${state}%`];
-      const [trows] = await conn.query(sql, params);
-      therapists = trows;
-    }
-
-    res.json({ ok:true, results, meta, therapists });
+    
+    res.json({ 
+      ok: true, 
+      message: 'Screening saved successfully',
+      scores: scores,
+      screening_id: screeningId
+    });
+    
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ ok:false, message:'Server error' });
+    console.error('Screening error:', err);
+    res.status(500).json({ ok: false, message: 'Server error' });
   }
 });
 
-module.exports = router;
+module.exports = router;module.exports = router;
